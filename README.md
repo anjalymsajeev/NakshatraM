@@ -35,6 +35,8 @@ Every CI run also uploads a ready-made `app-debug-apk`. Download it from the run
 
 ## Build and test
 
+Requires JDK 17 or newer. Android Studio's bundled JDK works; no separate Java installation is needed.
+
 ```bash
 ./gradlew assembleDebug testDebugUnitTest lintDebug ktlintCheck
 ```

@@ -51,7 +51,8 @@ android {
 }
 
 kotlin {
-    jvmToolchain(21)
+    // No jvmToolchain(): build with the JDK that runs Gradle (Android Studio's bundled JBR, or JDK 17+ on CI).
+    // Bytecode targets Java 11 either way, so no specific JDK has to be installed.
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
