@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Heritage & Horizon" design system (Stitch export, heritage_horizon/DESIGN.md), light scheme. -->
+<resources>
+    <color name="hh_primary">#735C00</color>
+    <color name="hh_on_primary">#FFFFFF</color>
+    <color name="hh_primary_container">#D4AF37</color>
+    <color name="hh_on_primary_container">#554300</color>
+    <color name="hh_secondary">#3B6751</color>
+    <color name="hh_on_secondary">#FFFFFF</color>
+    <color name="hh_secondary_container">#BBEACF</color>
+    <color name="hh_on_secondary_container">#406B56</color>
+    <color name="hh_tertiary">#5E604D</color>
+    <color name="hh_on_tertiary">#FFFFFF</color>
+    <color name="hh_error">#BA1A1A</color>
+    <color name="hh_on_error">#FFFFFF</color>
+    <color name="hh_background">#F5F5DC</color>
+    <color name="hh_on_background">#2F4F4F</color>
+    <color name="hh_surface">#F5F5DC</color>
+    <color name="hh_on_surface">#2F4F4F</color>
+    <color name="hh_surface_variant">#ECE9CF</color>
+    <color name="hh_on_surface_variant">#4D4635</color>
+    <color name="hh_surface_container">#FFFFFF</color>
+    <color name="hh_outline">#7F7663</color>
+    <color name="hh_outline_variant">#D0C5AF</color>
+    <!-- Brand accents used directly by components. -->
+    <color name="temple_gold">#D4AF37</color>
+    <color name="forest_green">#013220</color>
+    <color name="on_forest_green">#FFFFFF</color>
+</resources>

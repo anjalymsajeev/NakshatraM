@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hanken Grotesk (SIL OFL 1.1): body text, labels and numbers. -->
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font app:font="@font/hanken_grotesk" app:fontStyle="normal" app:fontWeight="400" />
+</font-family>

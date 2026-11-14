@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">നക്ഷത്ര കലണ്ടർ</string>
+
+    <string name="nav_home">ഹോം</string>
+    <string name="nav_family">കുടുംബം</string>
+    <string name="nav_calendar">കലണ്ടർ</string>
+    <string name="nav_settings">ക്രമീകരണങ്ങൾ</string>
+
+    <string name="home_title">ഇന്ന്</string>
+    <string name="home_malayalam_date_label">മലയാള തീയതി</string>
+    <string name="home_month_year">%1$s · %2$s · കൊല്ലവർഷം %3$d</string>
+    <string name="home_nakshatra_label">സൂര്യോദയത്തിലെ നക്ഷത്രം</string>
+    <string name="home_nakshatra_names">%1$s · %2$s</string>
+    <string name="home_nakshatra_until">%1$s വരെ</string>
+    <string name="home_family_label">കുടുംബം</string>
+    <plurals name="home_family_count">
+        <item quantity="one">%d കുടുംബാംഗം</item>
+        <item quantity="other">%d കുടുംബാംഗങ്ങൾ</item>
+    </plurals>
+    <string name="home_upcoming_label">വരാനിരിക്കുന്ന പിറന്നാളുകൾ</string>
+    <string name="home_upcoming_empty">കുടുംബാംഗങ്ങളെ ചേർത്താൽ അവരുടെ പിറന്നാൾ ദിവസങ്ങൾ ഇവിടെ കാണാം.</string>
+    <string name="action_add_person">കുടുംബാംഗത്തെ ചേർക്കുക</string>
+    <string name="action_view_calendar">കലണ്ടർ കാണുക</string>
+
+    <string name="family_empty_title">കുടുംബാംഗങ്ങൾ ഇല്ല</string>
+    <string name="family_empty_body">പിറന്നാൾ ദിവസങ്ങൾ അറിയാൻ ഒരാളെയും അവരുടെ ജന്മനക്ഷത്രത്തെയും ചേർക്കുക.</string>
+    <string name="calendar_placeholder_title">കലണ്ടർ</string>
+    <string name="calendar_placeholder_body">ഇംഗ്ലീഷ്, മലയാളം കലണ്ടർ കാഴ്ചകൾ അടുത്ത പതിപ്പിൽ വരും.</string>
+
+    <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
+    <string name="settings_language">ഭാഷ</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_malayalam">മലയാളം</string>
+    <string name="settings_theme">തീം</string>
+    <string name="settings_theme_system">സിസ്റ്റം</string>
+    <string name="settings_theme_light">ലൈറ്റ്</string>
+    <string name="settings_theme_dark">ഡാർക്ക്</string>
+    <string name="settings_star_day">പിറന്നാൾ ദിവസം</string>
+    <string name="settings_star_day_help">നക്ഷത്രം രണ്ടു ദിവസങ്ങളിലായി വരുമ്പോൾ ഏതു ദിവസമാണ് പിറന്നാൾ?</string>
+    <string name="settings_star_day_sunrise">സൂര്യോദയത്തിൽ</string>
+    <string name="settings_star_day_six_nazhika">6 നാഴിക</string>
+    <string name="settings_location">കണക്കുകൂട്ടൽ സ്ഥലം</string>
+
+    <string name="error_generic">എന്തോ പിശക് സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="error_unsupported_date">ഈ തീയതി പിന്തുണയ്ക്കുന്ന പരിധിക്ക് (1900–2100) പുറത്താണ്.</string>
+    <string name="error_calculation">കലണ്ടർ കണക്കുകൂട്ടൽ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="error_database">സംരക്ഷിച്ച വിവരങ്ങൾ വായിക്കാൻ കഴിഞ്ഞില്ല.</string>
+    <string name="loading">ലോഡ് ചെയ്യുന്നു</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark scheme derived from the Heritage & Horizon palette (the design export has no dark variant). -->
+<resources>
+    <color name="hh_primary">#E9C349</color>
+    <color name="hh_on_primary">#3C2F00</color>
+    <color name="hh_primary_container">#574500</color>
+    <color name="hh_on_primary_container">#FFE088</color>
+    <color name="hh_secondary">#A2D1B7</color>
+    <color name="hh_on_secondary">#073826</color>
+    <color name="hh_secondary_container">#234F3B</color>
+    <color name="hh_on_secondary_container">#BDEDD2</color>
+    <color name="hh_tertiary">#C8C8B0</color>
+    <color name="hh_on_tertiary">#303221</color>
+    <color name="hh_error">#FFB4AB</color>
+    <color name="hh_on_error">#690005</color>
+    <color name="hh_background">#121410</color>
+    <color name="hh_on_background">#E5E3D6</color>
+    <color name="hh_surface">#121410</color>
+    <color name="hh_on_surface">#E5E3D6</color>
+    <color name="hh_surface_variant">#4D4635</color>
+    <color name="hh_on_surface_variant">#D0C5AF</color>
+    <color name="hh_surface_container">#1F211B</color>
+    <color name="hh_outline">#99907C</color>
+    <color name="hh_outline_variant">#4D4635</color>
+    <color name="temple_gold">#E9C349</color>
+    <color name="forest_green">#A2D1B7</color>
+    <color name="on_forest_green">#073826</color>
+</resources>

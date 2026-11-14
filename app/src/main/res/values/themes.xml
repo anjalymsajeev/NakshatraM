@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NakshatraCalendar" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/hh_primary</item>
+        <item name="colorOnPrimary">@color/hh_on_primary</item>
+        <item name="colorPrimaryContainer">@color/hh_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/hh_on_primary_container</item>
+        <item name="colorSecondary">@color/hh_secondary</item>
+        <item name="colorOnSecondary">@color/hh_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/hh_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/hh_on_secondary_container</item>
+        <item name="colorTertiary">@color/hh_tertiary</item>
+        <item name="colorOnTertiary">@color/hh_on_tertiary</item>
+        <item name="colorError">@color/hh_error</item>
+        <item name="colorOnError">@color/hh_on_error</item>
+        <item name="android:colorBackground">@color/hh_background</item>
+        <item name="colorOnBackground">@color/hh_on_background</item>
+        <item name="colorSurface">@color/hh_surface</item>
+        <item name="colorOnSurface">@color/hh_on_surface</item>
+        <item name="colorSurfaceVariant">@color/hh_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/hh_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/hh_surface_container</item>
+        <item name="colorOutline">@color/hh_outline</item>
+        <item name="colorOutlineVariant">@color/hh_outline_variant</item>
+        <item name="android:fontFamily">@font/app_sans</item>
+        <item name="fontFamily">@font/app_sans</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NakshatraCalendar.Component</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.NakshatraCalendar.Container</item>
+        <item name="materialCardViewStyle">@style/Widget.NakshatraCalendar.GoldTrimmedCard</item>
+        <item name="android:statusBarColor">@color/hh_background</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+    </style>
+
+    <style name="Theme.NakshatraCalendar.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/hh_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.NakshatraCalendar</item>
+    </style>
+
+    <style name="ShapeAppearance.NakshatraCalendar.Component" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">@dimen/radius_component</item>
+    </style>
+
+    <style name="ShapeAppearance.NakshatraCalendar.Container" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/radius_container</item>
+    </style>
+
+    <!-- Signature "gold-trimmed card": surface container, soft elevation, gold stroke. -->
+    <style name="Widget.NakshatraCalendar.GoldTrimmedCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/hh_surface_container</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeColor">@color/temple_gold</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.NakshatraCalendar.Container</item>
+    </style>
+
+    <!-- Typography (design tokens: headline = Noto Serif, body/labels = Hanken Grotesk). -->
+    <style name="TextAppearance.NakshatraCalendar.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/app_serif</item>
+        <item name="android:fontFamily">@font/app_serif</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Malayalam display text: line height >= 1.5x size for ligatures and vowel signs. -->
+    <style name="TextAppearance.NakshatraCalendar.MalayalamDisplay" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/app_serif</item>
+        <item name="android:fontFamily">@font/app_serif</item>
+        <item name="android:textSize">26sp</item>
+        <item name="lineHeight">40sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.NakshatraCalendar.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/app_sans</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.NakshatraCalendar.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/app_sans</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="Widget.NakshatraCalendar.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/forest_green</item>
+        <item name="android:textColor">@color/on_forest_green</item>
+    </style>
+
+    <style name="Widget.NakshatraCalendar.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/temple_gold</item>
+        <item name="strokeWidth">1.5dp</item>
+    </style>
+</resources>
