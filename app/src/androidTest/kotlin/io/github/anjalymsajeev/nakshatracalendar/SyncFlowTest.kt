@@ -6,9 +6,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -33,8 +36,9 @@ class SyncFlowTest {
     fun selectTwoDatesConfirmAndSeeThemInGoogleCalendar() {
         ActivityScenario.launch(MainActivity::class.java).use {
             addMemberThroughUi(unique, "Revathi")
-            eventually { onView(allOf(withId(R.id.find_dates), isDisplayed())).perform(click()) }
-            // Find dates lists every member (other tests leave theirs); use this member's button.
+            // The member's menu opens Find dates with only this member selected (other tests leave members behind).
+            eventually { onView(allOf(withId(R.id.more), withParent(hasDescendant(withText(unique))))).perform(click()) }
+            onView(withText(R.string.action_find_dates)).inRoot(isPlatformPopup()).perform(click())
             val addLabel = InstrumentationRegistry.getInstrumentation().targetContext.getString(
                 R.string.action_add_to_google_calendar_for,
                 unique
