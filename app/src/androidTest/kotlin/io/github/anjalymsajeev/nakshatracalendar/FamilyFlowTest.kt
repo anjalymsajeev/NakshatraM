@@ -1,5 +1,6 @@
 package io.github.anjalymsajeev.nakshatracalendar
 
+import android.widget.EditText
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -8,13 +9,17 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
+import androidx.test.espresso.matcher.ViewMatchers.Visibility
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -60,7 +65,8 @@ class FamilyFlowTest {
             onView(withId(R.id.name_input)).perform(replaceText(unique), closeSoftKeyboard())
             onView(withId(R.id.nakshatra_input)).perform(click())
             onView(withId(R.id.search)).perform(replaceText("Atham"), closeSoftKeyboard())
-            eventually { onView(withText("Atham")).perform(click()) }
+            // The search box also shows "Atham"; click the list row, not the EditText.
+            eventually { onView(allOf(withText("Atham"), not(isAssignableFrom(EditText::class.java)))).perform(click()) }
             onView(withId(R.id.save)).perform(click())
             eventually { onView(withText(unique)).check(matches(isDisplayed())) }
 
@@ -85,8 +91,9 @@ class FamilyFlowTest {
             openFamilyAddScreen()
             eventually { onView(withId(R.id.save)).check(matches(isDisplayed())) }
             onView(withId(R.id.save)).perform(click())
-            eventually { onView(withText(R.string.error_name_required)).check(matches(isDisplayed())) }
-            onView(withText(R.string.error_nakshatra_required)).check(matches(isDisplayed()))
+            // Errors may sit below the fold of the scrolling form, so check visibility rather than isDisplayed().
+            eventually { onView(withText(R.string.error_name_required)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))) }
+            onView(withText(R.string.error_nakshatra_required)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         }
     }
 }
