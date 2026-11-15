@@ -50,11 +50,9 @@ class FamilyFragment : Fragment(R.layout.fragment_family) {
                         binding.list.isVisible = state is FamilyUiState.Content
                         binding.errorMessage.isVisible = state is FamilyUiState.Error
                         binding.addPerson.isVisible = state is FamilyUiState.Content
-                        when (state) {
-                            is FamilyUiState.Content -> adapter.submitList(state.items)
-                            is FamilyUiState.Error -> binding.errorMessage.setText(state.message)
-                            else -> Unit
-                        }
+                        // Clear the list when it is hidden, so deleted cards do not linger (and flash back on undo).
+                        adapter.submitList((state as? FamilyUiState.Content)?.items.orEmpty())
+                        if (state is FamilyUiState.Error) binding.errorMessage.setText(state.message)
                     }
                 }
                 launch {
