@@ -2,9 +2,8 @@ package io.github.anjalymsajeev.nakshatracalendar.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.datastore.preferences.preferencesDataStore
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,6 +16,12 @@ import io.github.anjalymsajeev.nakshatracalendar.domain.repository.ReminderRepos
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SettingsRepository
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SyncRepository
 import javax.inject.Singleton
+
+/**
+ * One DataStore per process for "settings" (same file as before: files/datastore/settings.preferences_pb). The
+ * delegate guarantees a single instance even when a new Hilt component is created (as in instrumented tests).
+ */
+private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -39,7 +44,6 @@ abstract class DataModule {
     companion object {
         @Provides
         @Singleton
-        fun preferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
-            PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("settings") }
+        fun preferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.settingsDataStore
     }
 }
