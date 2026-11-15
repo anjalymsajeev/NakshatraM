@@ -18,16 +18,29 @@ class GetTodayOverviewUseCase @Inject constructor(
     private val nakshatras: NakshatraEngine,
     private val settings: SettingsRepository,
     private val persons: PersonRepository,
+    private val upcomingPirannals: GetUpcomingPirannalsUseCase,
     private val clock: Clock
 ) {
-    operator fun invoke(): Flow<AppResult<TodayOverview>> = combine(settings.settings, persons.observeCount()) { userSettings, count ->
+    operator fun invoke(): Flow<AppResult<TodayOverview>> = combine(
+        settings.settings,
+        persons.observeCount(),
+        upcomingPirannals()
+    ) { userSettings, count, upcoming ->
         val location = userSettings.calculationLocation
         val today = LocalDate.now(clock.withZone(location.zone))
         when (val date = dates.malayalamDate(today)) {
             is AppResult.Failure -> date
             is AppResult.Success -> when (val star = nakshatras.nakshatraAtSunrise(today, location)) {
                 is AppResult.Failure -> star
-                is AppResult.Success -> AppResult.Success(TodayOverview(date.value, star.value, count, location.zone))
+                is AppResult.Success -> AppResult.Success(
+                    TodayOverview(
+                        date = date.value,
+                        nakshatraAtSunrise = star.value,
+                        familyMemberCount = count,
+                        upcoming = upcoming,
+                        zone = location.zone
+                    )
+                )
             }
         }
     }
