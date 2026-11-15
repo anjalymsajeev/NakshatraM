@@ -14,6 +14,7 @@ import io.github.anjalymsajeev.nakshatracalendar.R
 import io.github.anjalymsajeev.nakshatracalendar.databinding.FragmentSettingsBinding
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.StarDayConvention
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.ThemeMode
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,11 +30,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         binding.languageGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
             val tag = if (checkedId == R.id.language_malayalam) "ml" else "en"
+            // Changing the locale recreates the activity; skip when nothing changes.
+            if (AppCompatDelegate.getApplicationLocales().toLanguageTags().startsWith(tag)) return@addOnButtonCheckedListener
             AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
         }
 
+        // True while the screen renders stored values, so programmatic check() calls are not treated as user input.
+        var rendering = false
+
         binding.themeGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener
+            if (!isChecked || rendering) return@addOnButtonCheckedListener
             viewModel.setThemeMode(
                 when (checkedId) {
                     R.id.theme_light -> ThemeMode.LIGHT
@@ -43,7 +49,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             )
         }
         binding.starDayGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener
+            if (!isChecked || rendering) return@addOnButtonCheckedListener
             viewModel.setStarDayConvention(
                 if (checkedId == R.id.star_day_six_nazhika) StarDayConvention.SIX_NAZHIKA else StarDayConvention.SUNRISE
             )
@@ -51,7 +57,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.settings.collect { settings ->
+                viewModel.settings.filterNotNull().collect { settings ->
+                    rendering = true
                     binding.themeGroup.check(
                         when (settings.themeMode) {
                             ThemeMode.SYSTEM -> R.id.theme_system
@@ -66,6 +73,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         }
                     )
                     binding.calculationLocation.text = settings.calculationLocation.name
+                    rendering = false
                 }
             }
         }
