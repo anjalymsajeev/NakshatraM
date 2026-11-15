@@ -48,6 +48,11 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
+
+    sourceSets {
+        // Exported Room schemas, needed by MigrationTestHelper in instrumented tests.
+        getByName("androidTest").assets.srcDir("$projectDir/schemas")
+    }
 }
 
 kotlin {
@@ -97,4 +102,6 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }

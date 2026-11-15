@@ -24,7 +24,7 @@ androidx-test-ext = "1.2.1"
 androidx-test-runner = "1.6.2"
 espresso = "3.6.1"
 # The Malayalam calendar SDK (separate project): https://github.com/anjalymsajeev/malayalam-calendar-kotlin
-kollavarsham = "0.1.0-alpha01"
+kollavarsham = "0.2.0-alpha01"
 
 [libraries]
 kollavarsham-panchangam = { module = "io.github.anjalymsajeev:kollavarsham-panchangam", version.ref = "kollavarsham" }
@@ -41,6 +41,7 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
