@@ -151,11 +151,19 @@
                         tools:text="0 family members" />
 
                     <TextView
+                        android:id="@+id/upcoming_empty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_xs"
                         android:text="@string/home_upcoming_empty"
                         android:textAppearance="@style/TextAppearance.NakshatraCalendar.Label" />
+
+                    <LinearLayout
+                        android:id="@+id/upcoming_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xs"
+                        android:orientation="vertical" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

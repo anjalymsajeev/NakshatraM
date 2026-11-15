@@ -43,6 +43,8 @@ data class TodayOverview(
     val date: MalayalamDateInfo,
     val nakshatraAtSunrise: NakshatraInfo,
     val familyMemberCount: Int,
+    /** The family's next birth-star days, soonest first (at most a few). */
+    val upcoming: List<UpcomingPirannal> = emptyList(),
     /** The calculation location's zone, for showing times. */
     val zone: ZoneId
 )

@@ -4,8 +4,20 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <fragment android:id="@+id/homeFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.home.HomeFragment" android:label="@string/nav_home" />
-    <fragment android:id="@+id/familyFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.person.FamilyFragment" android:label="@string/nav_family" />
+    <fragment android:id="@+id/homeFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.home.HomeFragment" android:label="@string/nav_home">
+        <action android:id="@+id/action_home_to_person_edit" app:destination="@id/personEditFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/familyFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.person.FamilyFragment" android:label="@string/nav_family">
+        <action android:id="@+id/action_family_to_person_edit" app:destination="@id/personEditFragment" />
+    </fragment>
+
     <fragment android:id="@+id/calendarFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.calendar.CalendarFragment" android:label="@string/nav_calendar" />
+
     <fragment android:id="@+id/settingsFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.settings.SettingsFragment" android:label="@string/nav_settings" />
+
+    <!-- Add (personId = -1) or edit a family member. -->
+    <fragment android:id="@+id/personEditFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.person.PersonEditFragment" android:label="@string/person_add_title">
+        <argument android:name="personId" app:argType="long" android:defaultValue="-1L" />
+    </fragment>
 </navigation>

@@ -29,6 +29,18 @@ Noto Serif Malayalam and Hanken Grotesk (SIL OFL) are bundled so that Malayalam 
 
 The library's API uses `java.time`. Desugaring makes it available below API 26.
 
+## TD-9: Place search uses the platform Geocoder
+
+It's free and needs no API key; it works through Google Play services. It doesn't return time zones, so the zone comes from the country through ICU (`android.icu.util.TimeZone.getAvailableIDs`, API 24+): automatic for single-zone countries, chosen by the user otherwise. When offline or unavailable, the user enters the place manually (name, latitude, longitude, zone). A `GeocoderClient` wrapper keeps the mapping unit-testable.
+
+## TD-10: Birth-star uncertainty is shown, not hidden
+
+Within 60 minutes of a nakshatra change (birth times are often approximate), or when the birth time is unknown, the app lists the possible stars and lets the user choose. It never silently picks one.
+
+## TD-11: Event colours are Google Calendar's colours
+
+The user picks one of Google Calendar's 11 event colours, stored as its `colorId` (1–11), so that synced events (Sprint 4) keep that colour.
+
 ## TD-8: Google Calendar (planned for Sprint 4)
 
 - Google Identity Services `AuthorizationClient` with the scopes `calendar.events` and `calendar.calendarlist.readonly`.

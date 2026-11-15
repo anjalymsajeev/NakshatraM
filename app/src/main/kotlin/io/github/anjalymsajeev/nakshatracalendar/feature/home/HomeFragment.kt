@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.anjalymsajeev.nakshatracalendar.R
 import io.github.anjalymsajeev.nakshatracalendar.databinding.FragmentHomeBinding
+import io.github.anjalymsajeev.nakshatracalendar.databinding.ItemUpcomingBinding
+import io.github.anjalymsajeev.nakshatracalendar.feature.common.isMalayalamUi
 import kotlinx.coroutines.launch
 
 /** Renders [HomeUiState]; contains no business logic. */
@@ -21,12 +23,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentHomeBinding.bind(view)
-        binding.actionAddPerson.setOnClickListener { findNavController().navigate(R.id.familyFragment) }
+        binding.actionAddPerson.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeToPersonEdit(-1L)) }
         binding.actionViewCalendar.setOnClickListener { findNavController().navigate(R.id.calendarFragment) }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { render(binding, it) }
             }
+        }
+    }
+
+    private fun renderUpcoming(binding: FragmentHomeBinding, items: List<UpcomingUi>) {
+        val malayalam = requireContext().isMalayalamUi()
+        binding.upcomingEmpty.isVisible = items.isEmpty()
+        binding.upcomingList.removeAllViews()
+        items.forEach { item ->
+            val row = ItemUpcomingBinding.inflate(layoutInflater, binding.upcomingList, false)
+            row.colorDot.background.mutate().setTint(item.colorArgb)
+            row.name.text = item.name
+            row.nakshatra.text = getString(R.string.home_nakshatra_names, item.nakshatraMalayalam, item.nakshatraEnglish)
+            row.date.text = getString(
+                R.string.family_next_pirannal,
+                item.gregorianDate,
+                if (malayalam) item.malayalamDateMl else item.malayalamDateEn
+            )
+            row.root.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeToPersonEdit(item.personId)) }
+            binding.upcomingList.addView(row.root)
         }
     }
 
@@ -49,6 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 )
                 nakshatraName.text = getString(R.string.home_nakshatra_names, state.nakshatraMalayalam, state.nakshatraEnglish)
                 nakshatraUntil.text = getString(R.string.home_nakshatra_until, state.nakshatraUntil)
+                renderUpcoming(binding, state.upcoming)
                 familyCount.text = resources.getQuantityString(
                     R.plurals.home_family_count,
                     state.familyMemberCount,

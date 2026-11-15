@@ -16,8 +16,21 @@ sealed interface HomeUiState {
         val nakshatraMalayalam: String,
         val nakshatraEnglish: String,
         val nakshatraUntil: String,
-        val familyMemberCount: Int
+        val familyMemberCount: Int,
+        val upcoming: List<UpcomingUi> = emptyList()
     ) : HomeUiState
 
     data class Error(@StringRes val message: Int) : HomeUiState
 }
+
+/** One upcoming Pirannal row on the dashboard. */
+data class UpcomingUi(
+    val personId: Long,
+    val name: String,
+    val colorArgb: Int,
+    val nakshatraMalayalam: String,
+    val nakshatraEnglish: String,
+    val gregorianDate: String,
+    val malayalamDateMl: String,
+    val malayalamDateEn: String
+)

@@ -11,6 +11,7 @@ import io.github.anjalymsajeev.nakshatracalendar.domain.repository.NakshatraEngi
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.PersonRepository
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SettingsRepository
 import io.github.anjalymsajeev.nakshatracalendar.domain.usecase.GetTodayOverviewUseCase
+import io.github.anjalymsajeev.nakshatracalendar.domain.usecase.GetUpcomingPirannalsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import java.time.Clock
@@ -18,6 +19,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -35,7 +37,8 @@ class GetTodayOverviewUseCaseTest {
     private val settings = mockk<SettingsRepository> { every { settings } returns MutableStateFlow(UserSettings()) }
     private val count = MutableStateFlow(0)
     private val persons = mockk<PersonRepository> { every { observeCount() } returns count }
-    private val useCase = GetTodayOverviewUseCase(dates, nakshatras, settings, persons, clock)
+    private val upcoming = mockk<GetUpcomingPirannalsUseCase> { every { this@mockk.invoke(any()) } returns flowOf(emptyList()) }
+    private val useCase = GetTodayOverviewUseCase(dates, nakshatras, settings, persons, upcoming, clock)
 
     @Test
     fun combinesDateNakshatraAndCountUsingTheLocationsZone() = runTest {
