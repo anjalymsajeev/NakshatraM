@@ -4,7 +4,7 @@ An Android app for Malayalam families: keep each person's birth nakshatra, see t
 
 Built with Kotlin, XML layouts and MVVM + Clean Architecture. All Malayalam calendar and nakshatra calculations come from the separate [Malayalam Calendar Kotlin library](https://github.com/anjalymsajeev/malayalam-calendar-kotlin) (`io.github.anjalymsajeev:kollavarsham-*` on Maven Central). This app contains no calendar engine of its own.
 
-> **Status: Sprint 1 (foundation).** Home dashboard, settings, theme, language and library integration are done. Family profiles, nakshatra results, calendars and Google Calendar sync follow in Sprints 2–5. See [CHANGELOG.md](CHANGELOG.md).
+> **Status: Sprint 2 (family members).** Home dashboard, settings, family members (add, edit and delete, birth-star calculation, place search) and next Pirannal dates are done. Nakshatra results, calendars and Google Calendar sync follow in Sprints 3–5. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Features (planned for 1.0)
 
@@ -22,7 +22,7 @@ Kotlin · XML + ViewBinding · MVVM + Clean Architecture · Hilt · Room · Data
 
 1. Install the latest stable [Android Studio](https://developer.android.com/studio).
 2. **File → Open** this project, and wait for Gradle sync to finish.
-3. **Device Manager → Create Virtual Device** → Pixel 8 → system image **API 35 with "Google Play"** (needed for Google sign-in in Sprint 4) → Finish, then start it with ▶.
+3. **Device Manager → Create Virtual Device** → Pixel 8 → system image **API 35 with "Google Play"** (needed for online place search now, and Google sign-in in Sprint 4) → Finish, then start it with ▶.
 4. Choose the emulator in the toolbar and click **Run ▶** (`app`).
 
 From the command line, with an emulator running:

@@ -34,7 +34,8 @@ graph LR
 | Domain interface | Implementation | Library API used |
 |---|---|---|
 | `MalayalamDateProvider` | `KollavarshamDateProvider` | `KollavarshamCalendar.fromGregorian`, `MalayalamMonth.displayName`, `MalayalamDate.format` |
-| `NakshatraEngine` | `PanchangamNakshatraEngine` | `Panchangam.create(PanchangamLocation)`, `sunrise`, `nakshatraSpan`, `Nakshatra.displayName` |
+| `NakshatraEngine` | `PanchangamNakshatraEngine` | `Panchangam.create(PanchangamLocation)`, `sunrise`, `nakshatraSpan`, `nakshatraOccurrences` (0.2.0), `Nakshatra.displayName` |
+| `PlaceSearchRepository` | `GeocoderPlaceSearchRepository` | Android `Geocoder` (via `GeocoderClient`), `android.icu.util.TimeZone` (via `TimeZoneResolver`) |
 
 - Library exceptions are mapped to `AppError` at the adapter: `DateOutOfSupportedRangeException` becomes `UnsupportedDate`, and failed calculations become `CalculationFailed`.
 - Nakshatra (astronomy) and Malayalam date conversion are separate interfaces backed by separate library modules.
@@ -46,7 +47,7 @@ graph LR
 
 ## Persistence
 
-- **Room** (`AppDatabase`, schema v1 exported to `app/schemas`). Every version change ships a migration and a migration test.
+- **Room** (`AppDatabase`, schema v2, exported to `app/schemas`). v1→v2 is an auto-migration (birth place columns) with a `MigrationTestHelper` test. Every version change ships a migration and a migration test.
 - **DataStore:** theme and star-day convention.
 - **Language:** AppCompat's per-app locale (`setApplicationLocales`), the single source of truth.
 - **OAuth tokens are never stored by the app.** Google Identity Services manages them (Sprint 4).
