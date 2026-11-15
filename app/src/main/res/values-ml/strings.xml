@@ -47,4 +47,84 @@
     <string name="error_calculation">കലണ്ടർ കണക്കുകൂട്ടൽ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="error_database">സംരക്ഷിച്ച വിവരങ്ങൾ വായിക്കാൻ കഴിഞ്ഞില്ല.</string>
     <string name="loading">ലോഡ് ചെയ്യുന്നു</string>
+
+    <string name="error_network">ഇന്റർനെറ്റ് ലഭ്യമല്ല. കണക്ഷൻ പരിശോധിക്കുക അല്ലെങ്കിൽ സ്ഥലം നേരിട്ട് നൽകുക.</string>
+    <string name="error_geocoder_unavailable">ഈ ഉപകരണത്തിൽ സ്ഥല തിരയൽ ലഭ്യമല്ല. സ്ഥലം നേരിട്ട് നൽകുക.</string>
+    <string name="error_required">ആവശ്യമാണ്</string>
+
+    <string name="action_save">സംരക്ഷിക്കുക</string>
+    <string name="action_cancel">റദ്ദാക്കുക</string>
+    <string name="action_delete">ഇല്ലാതാക്കുക</string>
+    <string name="action_edit">തിരുത്തുക</string>
+    <string name="action_undo">പഴയപടിയാക്കുക</string>
+    <string name="action_ok">ശരി</string>
+    <string name="action_clear">മായ്ക്കുക</string>
+    <string name="action_back">തിരികെ</string>
+
+    <string name="family_title">പിറന്നാൾ ഷെഡ്യൂളർ</string>
+    <string name="family_subtitle">കുടുംബാംഗങ്ങളുടെ ജന്മനക്ഷത്രങ്ങളും വരാനിരിക്കുന്ന പിറന്നാളുകളും.</string>
+    <string name="family_next_pirannal">അടുത്ത പിറന്നാൾ: %1$s · %2$s</string>
+    <string name="family_next_unknown">അടുത്ത പിറന്നാൾ കണക്കാക്കാൻ കഴിഞ്ഞില്ല</string>
+    <string name="family_more_actions">%1$s – കൂടുതൽ ഓപ്ഷനുകൾ</string>
+    <string name="family_delete_title">കുടുംബാംഗത്തെ ഇല്ലാതാക്കണോ?</string>
+    <string name="family_delete_message">%1$s, ജനന വിവരങ്ങൾ എന്നിവ ഈ ഉപകരണത്തിൽ നിന്ന് നീക്കം ചെയ്യും.</string>
+    <string name="family_deleted">%1$s ഇല്ലാതാക്കി</string>
+
+    <string name="person_add_title">കുടുംബാംഗത്തെ ചേർക്കുക</string>
+    <string name="person_edit_title">കുടുംബാംഗത്തെ തിരുത്തുക</string>
+    <string name="person_not_found">ഈ കുടുംബാംഗം ഇപ്പോൾ നിലവിലില്ല.</string>
+    <string name="person_name">പേര്</string>
+    <string name="person_nakshatra">ജന്മനക്ഷത്രം</string>
+    <string name="person_birth_details">ജനന വിവരങ്ങൾ (ഐച്ഛികം)</string>
+    <string name="person_birth_details_help">ജന്മനക്ഷത്രം കണക്കാക്കാൻ ഉപയോഗിക്കുന്നു.</string>
+    <string name="person_birth_date">ജനന തീയതി</string>
+    <string name="person_birth_time">ജനന സമയം</string>
+    <string name="person_birth_place">ജനന സ്ഥലം</string>
+    <string name="person_calculate_star">മലയാളം നക്ഷത്രം കണക്കാക്കുക</string>
+    <string name="person_calculate_needs_date">ആദ്യം ജനന തീയതി നൽകുക.</string>
+    <string name="person_star_calculated">ജന്മനക്ഷത്രം: %1$s · %2$s</string>
+    <string name="person_choose_star_title">ജന്മനക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
+    <string name="person_calculation_settings">പിറന്നാൾ കണക്കുകൂട്ടൽ</string>
+    <string name="person_calculation_location_help">ഈ സ്ഥലത്തെ സൂര്യോദയമാണ് പിറന്നാൾ ദിവസം നിശ്ചയിക്കുന്നത്.</string>
+    <string name="person_calculation_location">കണക്കുകൂട്ടൽ സ്ഥലം</string>
+    <string name="person_event_color">ഇവന്റ് നിറം</string>
+    <string name="error_name_required">പേര് നൽകുക</string>
+    <string name="error_name_too_long">60 അക്ഷരങ്ങളിൽ കൂടരുത്</string>
+    <string name="error_nakshatra_required">നക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
+    <string name="error_birth_date_future">ജനന തീയതി ഭാവിയിലാകരുത്</string>
+    <string name="error_birth_date_too_early">1900-ന് മുമ്പുള്ള തീയതികൾ പിന്തുണയ്ക്കുന്നില്ല</string>
+    <string name="error_birth_details_need_date">ജനന സമയത്തിനും സ്ഥലത്തിനും ജനന തീയതി ആവശ്യമാണ്</string>
+
+    <string name="nakshatra_picker_title">നക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
+    <string name="nakshatra_picker_search">തിരയുക (മലയാളം അല്ലെങ്കിൽ ഇംഗ്ലീഷ്)</string>
+    <string name="nakshatra_item_description">%1$s, %2$s</string>
+
+    <string name="place_search_title">സ്ഥലം കണ്ടെത്തുക</string>
+    <string name="place_search_hint">നഗരം, പട്ടണം അല്ലെങ്കിൽ ഗ്രാമം</string>
+    <string name="place_no_results">സ്ഥലങ്ങളൊന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു എഴുത്തുരീതി പരീക്ഷിക്കുക അല്ലെങ്കിൽ സ്ഥലം നേരിട്ട് നൽകുക.</string>
+    <string name="place_choose_zone">സമയമേഖല തിരഞ്ഞെടുക്കുക</string>
+    <string name="place_zone_choose_later">സമയമേഖല അടുത്തതായി തിരഞ്ഞെടുക്കാം</string>
+    <string name="place_coordinates">%1$.4f, %2$.4f · %3$s</string>
+    <string name="place_with_zone">%1$s (%2$s)</string>
+    <string name="place_enter_manually">നേരിട്ട് നൽകുക</string>
+    <string name="place_manual_name">സ്ഥലപ്പേര്</string>
+    <string name="place_manual_latitude">അക്ഷാംശം (ഉദാ. 8.5241)</string>
+    <string name="place_manual_longitude">രേഖാംശം (ഉദാ. 76.9366)</string>
+    <string name="place_manual_zone">സമയമേഖല (ഉദാ. Asia/Kolkata)</string>
+    <string name="place_use_this">ഈ സ്ഥലം ഉപയോഗിക്കുക</string>
+    <string name="place_invalid_latitude">അക്ഷാംശം -90 മുതൽ 90 വരെ ആയിരിക്കണം</string>
+    <string name="place_invalid_longitude">രേഖാംശം -180 മുതൽ 180 വരെ ആയിരിക്കണം</string>
+    <string name="place_invalid_zone">പട്ടികയിൽ നിന്ന് ഒരു സമയമേഖല തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="color_lavender">ലാവെൻഡർ</string>
+    <string name="color_sage">സേജ്</string>
+    <string name="color_grape">ഗ്രേപ്പ്</string>
+    <string name="color_flamingo">ഫ്ലമിംഗോ</string>
+    <string name="color_banana">ബനാന</string>
+    <string name="color_tangerine">ടാംഗറിൻ</string>
+    <string name="color_peacock">പീക്കോക്ക്</string>
+    <string name="color_graphite">ഗ്രാഫൈറ്റ്</string>
+    <string name="color_blueberry">ബ്ലൂബെറി</string>
+    <string name="color_basil">ബേസിൽ</string>
+    <string name="color_tomato">ടൊമാറ്റോ</string>
 </resources>

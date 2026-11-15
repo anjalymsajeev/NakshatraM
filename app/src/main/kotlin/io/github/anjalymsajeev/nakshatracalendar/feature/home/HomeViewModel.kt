@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.anjalymsajeev.nakshatracalendar.R
-import io.github.anjalymsajeev.nakshatracalendar.core.common.AppError
 import io.github.anjalymsajeev.nakshatracalendar.core.common.AppResult
 import io.github.anjalymsajeev.nakshatracalendar.core.common.DefaultDispatcher
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.TodayOverview
 import io.github.anjalymsajeev.nakshatracalendar.domain.usecase.GetTodayOverviewUseCase
+import io.github.anjalymsajeev.nakshatracalendar.feature.common.messageRes
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import javax.inject.Inject
@@ -25,13 +25,14 @@ class HomeViewModel @Inject constructor(getTodayOverview: GetTodayOverviewUseCas
     ViewModel() {
     private val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
     private val timeFormatter = DateTimeFormatter.ofPattern("d MMM, HH:mm")
+    private val upcomingFormatter = DateTimeFormatter.ofPattern("EEE, d MMM")
 
     val uiState: StateFlow<HomeUiState> =
         getTodayOverview()
             .map { result ->
                 when (result) {
                     is AppResult.Success -> result.value.toContent()
-                    is AppResult.Failure -> HomeUiState.Error(result.error.toMessage())
+                    is AppResult.Failure -> HomeUiState.Error(result.error.messageRes())
                 }
             }
             .catch { emit(HomeUiState.Error(R.string.error_generic)) }
@@ -48,14 +49,20 @@ class HomeViewModel @Inject constructor(getTodayOverview: GetTodayOverviewUseCas
         nakshatraMalayalam = nakshatraAtSunrise.nameMalayalam,
         nakshatraEnglish = nakshatraAtSunrise.nameEnglish,
         nakshatraUntil = nakshatraAtSunrise.end.atZone(zone).format(timeFormatter),
-        familyMemberCount = familyMemberCount
+        familyMemberCount = familyMemberCount,
+        upcoming = upcoming.map { u ->
+            UpcomingUi(
+                personId = u.person.id,
+                name = u.person.name,
+                colorArgb = u.person.eventColor.argb.toInt(),
+                nakshatraMalayalam = u.nakshatra.nameMalayalam,
+                nakshatraEnglish = u.nakshatra.nameEnglish,
+                gregorianDate = u.observanceDate.format(upcomingFormatter),
+                malayalamDateMl = u.malayalamDate.formattedMalayalam,
+                malayalamDateEn = u.malayalamDate.formattedEnglish
+            )
+        }
     )
-
-    private fun AppError.toMessage(): Int = when (this) {
-        is AppError.UnsupportedDate -> R.string.error_unsupported_date
-        is AppError.CalculationFailed -> R.string.error_calculation
-        is AppError.Database -> R.string.error_database
-    }
 
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L

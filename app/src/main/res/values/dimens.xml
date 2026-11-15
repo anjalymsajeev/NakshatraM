@@ -9,4 +9,5 @@
     <dimen name="radius_component">8dp</dimen>
     <dimen name="radius_container">16dp</dimen>
     <dimen name="gold_trim">2dp</dimen>
+    <dimen name="color_swatch">40dp</dimen>
 </resources>
