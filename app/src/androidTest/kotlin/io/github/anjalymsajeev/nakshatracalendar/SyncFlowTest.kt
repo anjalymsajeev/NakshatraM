@@ -51,13 +51,18 @@ class SyncFlowTest {
             onView(withId(R.id.deselect_all)).perform(click())
             onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
             onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+            val afterTaps = "${textOf(R.id.selected_count)} / ${textOf(R.id.create_selected)}"
 
             // Connect and pick a calendar if none is chosen yet (the choice persists between tests).
             onView(withId(R.id.change_calendar)).perform(click())
             eventually { onView(withId(R.id.connect)).perform(click()) }
             eventually { onView(withText(TestGoogleCalendar.calendar.name)).perform(click()) }
 
-            eventually { onView(withId(R.id.create_selected)).check(matches(withText(containsCount(2)))) }
+            try {
+                eventually { onView(withId(R.id.create_selected)).check(matches(withText(containsCount(2)))) }
+            } catch (e: Throwable) {
+                throw AssertionError("after taps: $afterTaps; now: ${textOf(R.id.selected_count)} / ${textOf(R.id.create_selected)}", e)
+            }
             onView(withId(R.id.create_selected)).perform(click())
             onView(withText(R.string.preview_confirm_action)).perform(click())
 
@@ -68,6 +73,13 @@ class SyncFlowTest {
             assertEquals("events sent: ${TestGoogleCalendar.upserts.map { it.title + " @" + it.date }}", 2, mine?.size)
             assertTrue(mine!!.all { it.calendarId == TestGoogleCalendar.calendar.id && it.title == "$unique - Revathi Nakshatra" })
         }
+    }
+
+    /** The current text of a TextView, for failure messages. */
+    private fun textOf(id: Int): String {
+        var text = "?"
+        onView(withId(id)).check { view, _ -> text = (view as? android.widget.TextView)?.text?.toString() ?: "?" }
+        return text
     }
 
     private fun <T> eventuallyValue(timeoutMs: Long = 10_000, read: () -> T?): T? {
