@@ -82,10 +82,12 @@ class FamilyFlowTest {
             onView(allOf(withId(R.id.more), withParent(hasDescendant(withText("${unique}x"))))).perform(click())
             onView(withText(R.string.action_delete)).inRoot(isPlatformPopup()).perform(click())
             onView(allOf(withText(R.string.action_delete), withId(android.R.id.button1))).perform(click())
-            // The delete ran when its Snackbar appears; then the card must leave the list.
+            // The delete ran when its Snackbar appears; then no card for the member may be shown. (When the last member
+            // goes, the list is hidden and a GONE RecyclerView keeps its old child views until its next layout, so check
+            // what is displayed rather than what exists in the view tree.)
             val deletedMessage = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.family_deleted, "${unique}x")
             eventually { onView(withText(deletedMessage)).check(matches(isDisplayed())) }
-            eventually { onView(allOf(withId(R.id.name), withText("${unique}x"))).check(doesNotExist()) }
+            eventually { onView(allOf(withId(R.id.name), withText("${unique}x"), isDisplayed())).check(doesNotExist()) }
         }
     }
 
