@@ -55,7 +55,3 @@ The second command needs a running emulator or a connected device.
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Layers, packages, data flow, library integration |
 | [TECHNICAL_DECISIONS.md](TECHNICAL_DECISIONS.md) | Decision log |
 | [CHANGELOG.md](CHANGELOG.md) | Changes per sprint |
-
-## Credits
-
-Maintained by [@anjalymsajeev](https://github.com/anjalymsajeev). The UI follows the "Heritage & Horizon" design (Stitch). It bundles the fonts Noto Serif Malayalam and Hanken Grotesk, under the SIL Open Font License; the license texts are in `app/src/main/assets/licenses/`.
