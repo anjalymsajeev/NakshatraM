@@ -7,8 +7,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers.allOf
@@ -32,7 +34,12 @@ class SyncFlowTest {
         ActivityScenario.launch(MainActivity::class.java).use {
             addMemberThroughUi(unique, "Revathi")
             eventually { onView(allOf(withId(R.id.find_dates), isDisplayed())).perform(click()) }
-            eventually { onView(allOf(withId(R.id.add_to_calendar), isDisplayed())).perform(click()) }
+            // Find dates lists every member (other tests leave theirs); use this member's button.
+            val addLabel = InstrumentationRegistry.getInstrumentation().targetContext.getString(
+                R.string.action_add_to_google_calendar_for,
+                unique
+            )
+            eventually { onView(allOf(withId(R.id.add_to_calendar), withContentDescription(addLabel))).perform(click()) }
 
             // Manual mode: choose exactly two dates.
             eventually { onView(withId(R.id.deselect_all)).check(matches(isDisplayed())) }
