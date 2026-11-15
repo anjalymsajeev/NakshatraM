@@ -11,8 +11,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.anjalymsajeev.nakshatracalendar.domain.repository.CalendarPreferences
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.PersonRepository
+import io.github.anjalymsajeev.nakshatracalendar.domain.repository.ReminderRepository
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SettingsRepository
+import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SyncRepository
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +26,15 @@ abstract class DataModule {
 
     @Binds
     abstract fun personRepository(impl: PersonRepositoryImpl): PersonRepository
+
+    @Binds
+    abstract fun syncRepository(impl: SyncRepositoryImpl): SyncRepository
+
+    @Binds
+    abstract fun reminderRepository(impl: ReminderRepositoryImpl): ReminderRepository
+
+    @Binds
+    abstract fun calendarPreferences(impl: CalendarPreferencesImpl): CalendarPreferences
 
     companion object {
         @Provides

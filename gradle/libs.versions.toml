@@ -23,6 +23,12 @@ turbine = "1.2.0"
 androidx-test-ext = "1.2.1"
 androidx-test-runner = "1.6.2"
 espresso = "3.6.1"
+# Sprint 4: Google Calendar. Pinned to releases that support Kotlin 2.0 / AGP 8.7 / compileSdk 35.
+play-services-auth = "21.2.0"
+okhttp = "4.12.0"
+serialization = "1.7.3"
+work = "2.9.1"
+androidx-hilt = "1.2.0"
 # The Malayalam calendar SDK (separate project): https://github.com/anjalymsajeev/malayalam-calendar-kotlin
 kollavarsham = "0.2.0-alpha01"
 
@@ -55,10 +61,20 @@ androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "a
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "work" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }

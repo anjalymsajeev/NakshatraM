@@ -36,7 +36,7 @@ class SettingsViewModelTest {
     @Test
     fun `settings are null until stored values arrive, and nothing is written meanwhile`() = runTest(dispatcher) {
         every { repository.settings } returns emptyFlow()
-        val viewModel = SettingsViewModel(repository)
+        val viewModel = SettingsViewModel(repository, mockk(relaxed = true), mockk(relaxed = true))
         backgroundScope.launch { viewModel.settings.collect {} }
 
         assertNull(viewModel.settings.value)
@@ -51,7 +51,7 @@ class SettingsViewModelTest {
     fun `writing the stored value again is skipped, a new value is written`() = runTest(dispatcher) {
         val stored = UserSettings(themeMode = ThemeMode.DARK, starDayConvention = StarDayConvention.SIX_NAZHIKA)
         every { repository.settings } returns MutableStateFlow(stored)
-        val viewModel = SettingsViewModel(repository)
+        val viewModel = SettingsViewModel(repository, mockk(relaxed = true), mockk(relaxed = true))
         backgroundScope.launch { viewModel.settings.collect {} }
         assertEquals(stored, viewModel.settings.value)
 

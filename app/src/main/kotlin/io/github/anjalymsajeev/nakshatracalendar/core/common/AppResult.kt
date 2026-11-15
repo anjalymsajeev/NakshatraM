@@ -23,7 +23,23 @@ sealed interface AppError {
 
     /** A device service (for example the platform geocoder) is not available on this device. */
     data object ServiceUnavailable : AppError
+
+    /** Google authorization is missing, expired or was revoked; the user must (re)connect. */
+    data object AuthRequired : AppError
+
+    /** Google Calendar is busy or the quota is exceeded; retry later with backoff. */
+    data object RateLimited : AppError
+
+    /** The Google Calendar API rejected the request (status [code]); retrying will not help. */
+    data class ApiError(val code: Int, val detail: String) : AppError
+
+    /** A temporary server error (5xx); retry later. */
+    data class ServerError(val code: Int) : AppError
 }
+
+/** Failures worth retrying automatically (with backoff). */
+val AppError.isRetryable: Boolean
+    get() = this is AppError.Network || this == AppError.RateLimited || this is AppError.ServerError
 
 inline fun <T, R> AppResult<T>.map(transform: (T) -> R): AppResult<R> = when (this) {
     is AppResult.Success -> AppResult.Success(transform(value))

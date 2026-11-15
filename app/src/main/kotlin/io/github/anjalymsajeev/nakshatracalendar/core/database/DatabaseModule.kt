@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.anjalymsajeev.nakshatracalendar.data.local.dao.PersonProfileDao
+import io.github.anjalymsajeev.nakshatracalendar.data.local.dao.SyncDao
 import javax.inject.Singleton
 
 @Module
@@ -20,4 +21,7 @@ object DatabaseModule {
 
     @Provides
     fun personProfileDao(db: AppDatabase): PersonProfileDao = db.personProfileDao()
+
+    @Provides
+    fun syncDao(db: AppDatabase): SyncDao = db.syncDao()
 }

@@ -2,6 +2,8 @@ package io.github.anjalymsajeev.nakshatracalendar
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.ThemeMode
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.SettingsRepository
@@ -14,8 +16,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltAndroidApp
-class NakshatraCalendarApp : Application() {
+class NakshatraCalendarApp :
+    Application(),
+    Configuration.Provider {
     @Inject lateinit var settings: SettingsRepository
+
+    @Inject lateinit var workerFactory: HiltWorkerFactory
+
+    /** WorkManager creates workers through Hilt (the default initializer is removed in the manifest). */
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().setWorkerFactory(workerFactory).build()
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
