@@ -8,7 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
@@ -46,7 +46,8 @@ class SyncFlowTest {
             eventually { onView(allOf(withId(R.id.add_to_calendar), withContentDescription(addLabel))).perform(click()) }
 
             // Manual mode: choose exactly two dates.
-            eventually { onView(withId(R.id.deselect_all)).check(matches(isDisplayed())) }
+            // The buttons are enabled once the dates have loaded; a tap before that would be ignored.
+            eventually { onView(withId(R.id.deselect_all)).check(matches(isEnabled())) }
             onView(withId(R.id.deselect_all)).perform(click())
             onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
             onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
