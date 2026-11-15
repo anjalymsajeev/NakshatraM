@@ -49,8 +49,12 @@ class SyncFlowTest {
             // The buttons are enabled once the dates have loaded; a tap before that would be ignored.
             eventually { onView(withId(R.id.deselect_all)).check(matches(isEnabled())) }
             onView(withId(R.id.deselect_all)).perform(click())
-            onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-            onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+            // Tap rows until two are selected: a star that covers no sunrise has no observance day, so its row is
+            // (correctly) not selectable, and which rows those are depends on the real dates.
+            var position = 0
+            while (!textOf(R.id.selected_count).startsWith("2 ") && position < MAX_ROWS_TO_TRY) {
+                onView(withId(R.id.dates)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(position++, click()))
+            }
             val afterTaps = "${textOf(R.id.selected_count)} / ${textOf(R.id.create_selected)}"
 
             // Connect and pick a calendar if none is chosen yet (the choice persists between tests).
@@ -89,6 +93,10 @@ class SyncFlowTest {
             Thread.sleep(200)
         }
         return read()
+    }
+
+    private companion object {
+        const val MAX_ROWS_TO_TRY = 6
     }
 
     private fun containsCount(count: Int) = org.hamcrest.Matchers.containsString("($count)")
