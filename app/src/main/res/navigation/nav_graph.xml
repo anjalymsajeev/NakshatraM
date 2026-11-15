@@ -25,5 +25,27 @@
     <!-- Find Nakshatra dates in a range; personId preselects one member (-1 = everyone). -->
     <fragment android:id="@+id/findDatesFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.finddates.FindDatesFragment" android:label="@string/find_title">
         <argument android:name="personId" app:argType="long" android:defaultValue="-1L" />
+        <action android:id="@+id/action_find_dates_to_preview" app:destination="@id/eventPreviewFragment" />
     </fragment>
+
+    <!-- Google Calendar (Sprint 4) -->
+    <fragment android:id="@+id/eventPreviewFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.sync.EventPreviewFragment" android:label="@string/preview_title">
+        <argument android:name="personId" app:argType="long" />
+        <argument android:name="startEpochDay" app:argType="long" />
+        <argument android:name="endEpochDay" app:argType="long" />
+        <action android:id="@+id/action_preview_to_result" app:destination="@id/syncResultFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/googleAccountFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.sync.GoogleAccountFragment" android:label="@string/account_title" />
+
+    <fragment android:id="@+id/syncResultFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.sync.SyncResultFragment" android:label="@string/result_title">
+        <argument android:name="syncId" app:argType="long" />
+    </fragment>
+
+    <fragment android:id="@+id/syncHistoryFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.sync.SyncHistoryFragment" android:label="@string/history_title">
+        <action android:id="@+id/action_history_to_result" app:destination="@id/syncResultFragment" />
+    </fragment>
+
+    <action android:id="@+id/action_global_google_account" app:destination="@id/googleAccountFragment" />
+    <action android:id="@+id/action_global_sync_history" app:destination="@id/syncHistoryFragment" />
 </navigation>

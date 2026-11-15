@@ -9,13 +9,19 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers.allOf
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /** Add a member, open Find dates, see real occurrences grouped under the member (real library, real Room). */
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class FindDatesFlowTest {
+    @get:Rule val hilt = HiltAndroidRule(this)
+
     private val unique = "F${System.nanoTime() % 1_000_000}"
 
     @Test

@@ -38,6 +38,28 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun migrate2To3AddsSyncTablesAndKeepsMembers() {
+        helper.createDatabase(DB, 2).apply {
+            execSQL(
+                """
+                INSERT INTO person_profile (id, name, nakshatra_number, location_name, location_latitude, location_longitude,
+                    time_zone, event_color, created_at, updated_at)
+                VALUES (1, 'Anvidh', 13, 'Thiruvananthapuram', 8.5241, 76.9366, 'Asia/Kolkata', 10, 0, 0)
+                """.trimIndent()
+            )
+            close()
+        }
+        val db = helper.runMigrationsAndValidate(DB, 3, true)
+        db.query("SELECT COUNT(*) FROM person_profile").use { c ->
+            assertTrue(c.moveToFirst())
+            assertEquals(1, c.getInt(0))
+        }
+        listOf("nakshatra_occurrence", "calendar_sync", "calendar_event", "reminder_configuration").forEach { table ->
+            db.query("SELECT COUNT(*) FROM $table").use { c -> assertTrue(c.moveToFirst()) }
+        }
+    }
+
     private companion object {
         const val DB = "migration-test"
     }

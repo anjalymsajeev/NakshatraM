@@ -10,15 +10,21 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import org.hamcrest.Matchers.not
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class CalendarFlowTest {
+    @get:Rule val hilt = HiltAndroidRule(this)
+
     private fun monthTitle(month: YearMonth, locale: Locale) = month.format(DateTimeFormatter.ofPattern("MMMM yyyy", locale))
 
     @Test

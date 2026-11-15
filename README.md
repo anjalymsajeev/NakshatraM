@@ -4,7 +4,7 @@ An Android app for Malayalam families: keep each person's birth nakshatra, see t
 
 Built with Kotlin, XML layouts and MVVM + Clean Architecture. All Malayalam calendar and nakshatra calculations come from the separate [Malayalam Calendar Kotlin library](https://github.com/anjalymsajeev/malayalam-calendar-kotlin) (`io.github.anjalymsajeev:kollavarsham-*` on Maven Central). This app contains no calendar engine of its own.
 
-> **Status: Sprint 3 (results and calendars).** Home dashboard, settings, family members, Nakshatra dates in a chosen range, and Gregorian and Malayalam month calendars are done. Google Calendar sync and production hardening follow in Sprints 4–5. See [CHANGELOG.md](CHANGELOG.md).
+> **Status: Sprint 4 (Google Calendar).** Family members, Nakshatra dates in a range, Gregorian and Malayalam calendars, and Google Calendar sync (preview, automatic or selected dates, no duplicates, reminders, history) are done. Production hardening follows in Sprint 5. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Features (planned for 1.0)
 
@@ -16,7 +16,7 @@ Built with Kotlin, XML layouts and MVVM + Clean Architecture. All Malayalam cale
 
 ## Tech stack
 
-Kotlin · XML + ViewBinding · MVVM + Clean Architecture · Hilt · Room · DataStore · Coroutines + Flow · Navigation Component · Material Components · WorkManager and Google Calendar API (Sprint 4) · JUnit, MockK, Turbine, Espresso.
+Kotlin · XML + ViewBinding · MVVM + Clean Architecture · Hilt · Room · DataStore · Coroutines + Flow · Navigation Component · Material Components · WorkManager · Google Identity Services + Google Calendar API v3 (OkHttp) · JUnit, MockK, Turbine, MockWebServer, Espresso.
 
 ## Run on an emulator
 
@@ -32,6 +32,24 @@ From the command line, with an emulator running:
 ```
 
 Every CI run also uploads a ready-made `app-debug-apk`. Download it from the run's **Artifacts**, then drag the APK onto the emulator window.
+
+## Set up Google Calendar (once)
+
+Google Calendar sync needs a Google Cloud project that knows this app. No API key or secret goes into the app: Google matches an Android OAuth client by package name and signing certificate.
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/) and create a project (for example "Nakshatra Calendar").
+2. **APIs & Services → Library** → search **Google Calendar API** → **Enable**.
+3. **APIs & Services → OAuth consent screen** (Google Auth Platform): app name, your email, audience **External**. Leave it in **Testing** and add your Gmail address under **Test users**.
+4. Under **Data access**, add the scopes `.../auth/calendar.events` and `.../auth/calendar.calendarlist.readonly`.
+5. **Clients → Create client → Android**: package name `io.github.anjalymsajeev.nakshatracalendar`, and the SHA-1 of your debug key:
+
+   ```bash
+   keytool -list -v -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android | grep SHA1
+   ```
+
+6. Run the app on a device or emulator **with Google Play**, signed in with that test user. Open **Find Nakshatra dates → Add to Google Calendar** and connect.
+
+A release build signed with another key needs its own SHA-1 added to the client.
 
 ## Build and test
 

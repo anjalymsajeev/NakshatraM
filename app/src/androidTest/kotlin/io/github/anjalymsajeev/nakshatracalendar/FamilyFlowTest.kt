@@ -19,8 +19,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -28,8 +31,11 @@ import org.junit.runner.RunWith
  * Add, edit and delete a family member through the real UI (real Room database, real library).
  * Each test uses a unique name, so tests do not depend on what other tests left behind.
  */
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class FamilyFlowTest {
+    @get:Rule val hilt = HiltAndroidRule(this)
+
     private val unique = "T${System.nanoTime() % 1_000_000}"
 
     /** Espresso does not wait for background coroutines; retry an assertion for up to [timeoutMs]. */

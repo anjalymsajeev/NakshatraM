@@ -14,8 +14,8 @@ io.github.anjalymsajeev.nakshatracalendar
 ├── core/          common (AppResult, AppError, dispatchers), database (Room), di (Clock, dispatchers)
 ├── domain/        model, repository (interfaces), usecase
 ├── data/          local (Room entities, DAOs), repository (implementations, DataStore)
-├── integration/   malayalamcalendar, nakshatra (library adapters), googlecalendar (Sprint 4)
-└── feature/       home, person, nakshatra, finddates, calendar, settings  (+ eventpreview, sync later)
+├── integration/   malayalamcalendar, nakshatra (library adapters), geocoding, googlecalendar (OAuth, REST, worker)
+└── feature/       home, person, nakshatra, finddates, calendar, sync (preview, account, results, history), settings
 ```
 
 Dependencies point inward: `feature → domain ← data / integration`. Hilt modules bind the implementations.
@@ -48,10 +48,27 @@ graph LR
 
 ## Persistence
 
-- **Room** (`AppDatabase`, schema v2, exported to `app/schemas`). v1→v2 is an auto-migration (birth place columns) with a `MigrationTestHelper` test. Every version change ships a migration and a migration test.
-- **DataStore:** theme and star-day convention.
+- **Room** (`AppDatabase`, schema v3, exported to `app/schemas`). v1→v2 (birth place columns) and v2→v3 (sync tables) are auto-migrations, each with a `MigrationTestHelper` test. Every version change ships a migration and a migration test.
+- Sync tables: `nakshatra_occurrence` (snapshot) ← `calendar_event` (unique per occurrence and calendar) → `calendar_sync` (run); `reminder_configuration` (one row).
+- **DataStore:** theme, star-day convention, and the chosen Google calendar (id and name).
 - **Language:** AppCompat's per-app locale (`setApplicationLocales`), the single source of truth.
-- **OAuth tokens are never stored by the app.** Google Identity Services manages them (Sprint 4).
+- **OAuth tokens are never stored by the app.** Google Identity Services manages the grant.
+
+## Google Calendar sync
+
+```mermaid
+graph LR
+  P[EventPreviewViewModel] -->|confirm + consent| S[StartSyncUseCase]
+  S --> R[(Room: run, occurrences, events)]
+  S --> W[SyncScheduler → CalendarSyncWorker]
+  W --> E[CalendarSyncEngine]
+  E --> G[CalendarGateway: GoogleCalendarApi / OkHttp]
+  E --> A[GoogleAuthRepository: AuthorizationClient]
+  E --> R
+  H[SyncResult / SyncHistory] --> R
+```
+
+`CalendarSyncEngine` is plain domain code (no Android types) and is unit-tested with fakes; the worker only maps its outcome to WorkManager results.
 
 ## Compose migration path
 

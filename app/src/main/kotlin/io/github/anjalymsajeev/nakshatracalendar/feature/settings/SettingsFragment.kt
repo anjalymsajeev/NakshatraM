@@ -9,11 +9,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.anjalymsajeev.nakshatracalendar.R
+import io.github.anjalymsajeev.nakshatracalendar.databinding.DialogCustomReminderBinding
 import io.github.anjalymsajeev.nakshatracalendar.databinding.FragmentSettingsBinding
+import io.github.anjalymsajeev.nakshatracalendar.domain.model.ReminderSetting
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.StarDayConvention
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.ThemeMode
+import io.github.anjalymsajeev.nakshatracalendar.feature.common.label
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
@@ -55,8 +60,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             )
         }
 
+        binding.googleAccount.setOnClickListener { findNavController().navigate(R.id.action_global_google_account) }
+        binding.syncHistory.setOnClickListener { findNavController().navigate(R.id.action_global_sync_history) }
+        binding.reminder.setOnClickListener { chooseReminder() }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.calendar.collect { calendar ->
+                        binding.googleAccount.text = getString(
+                            R.string.settings_google_account_value,
+                            calendar?.name ?: getString(R.string.account_not_connected_short)
+                        )
+                    }
+                }
+                launch {
+                    viewModel.reminder.filterNotNull().collect { reminder ->
+                        binding.reminder.text = getString(R.string.settings_reminder_value, reminder.label(requireContext()))
+                    }
+                }
                 viewModel.settings.filterNotNull().collect { settings ->
                     rendering = true
                     binding.themeGroup.check(
@@ -75,6 +97,48 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     binding.calculationLocation.text = settings.calculationLocation.name
                     rendering = false
                 }
+            }
+        }
+    }
+
+    /** Presets plus "Custom…" (Feature 7). */
+    private fun chooseReminder() {
+        val presets = ReminderSetting.PRESETS
+        val current = viewModel.reminder.value
+        val labels = presets.map { it.label(requireContext()) } + getString(R.string.reminder_custom)
+        val checked = presets.indexOf(current).takeIf { it >= 0 } ?: presets.size
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.settings_reminder)
+            .setSingleChoiceItems(labels.toTypedArray(), checked) { dialog, which ->
+                dialog.dismiss()
+                if (which < presets.size) viewModel.setReminder(presets[which]) else chooseCustomReminder()
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .show()
+    }
+
+    private fun chooseCustomReminder() {
+        val dialogBinding = DialogCustomReminderBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.reminder_custom)
+            .setView(dialogBinding.root)
+            .setNegativeButton(R.string.action_cancel, null)
+            .setPositiveButton(R.string.action_save, null)
+            .show()
+        // Validate before closing: Google accepts up to four weeks.
+        dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            val amount = dialogBinding.amount.text?.toString()?.toIntOrNull()
+            val factor = when (dialogBinding.unitGroup.checkedButtonId) {
+                R.id.unit_minutes -> 1
+                R.id.unit_days -> 1_440
+                else -> 60
+            }
+            val minutes = amount?.let { it.toLong() * factor }
+            if (minutes == null || minutes < 0 || minutes > ReminderSetting.MAX_MINUTES) {
+                dialogBinding.amountLayout.error = getString(R.string.reminder_custom_error)
+            } else {
+                viewModel.setReminder(ReminderSetting.Before(minutes.toInt()))
+                dialog.dismiss()
             }
         }
     }

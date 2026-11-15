@@ -41,7 +41,12 @@ class FindDatesFragment : Fragment(R.layout.fragment_find_dates) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentFindDatesBinding.bind(view)
-        val adapter = ResultsAdapter(requireContext().isMalayalamUi())
+        val adapter = ResultsAdapter(requireContext().isMalayalamUi()) { personId ->
+            val state = viewModel.uiState.value
+            findNavController().navigate(
+                FindDatesFragmentDirections.actionFindDatesToPreview(personId, state.start.toEpochDay(), state.end.toEpochDay())
+            )
+        }
         binding.results.adapter = adapter
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.startInput.setOnClickListener { pickDate(isStart = true) }
@@ -126,7 +131,8 @@ class FindDatesFragment : Fragment(R.layout.fragment_find_dates) {
 
     private fun LocalDate.toUtcMillis(): Long = atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 
-    private class ResultsAdapter(private val malayalam: Boolean) : ListAdapter<ResultRowUi, RecyclerView.ViewHolder>(Diff) {
+    private class ResultsAdapter(private val malayalam: Boolean, private val onAddToCalendar: (Long) -> Unit) :
+        ListAdapter<ResultRowUi, RecyclerView.ViewHolder>(Diff) {
         class HeaderHolder(val binding: ItemOccurrenceHeaderBinding) : RecyclerView.ViewHolder(binding.root)
 
         class OccurrenceHolder(val binding: ItemOccurrenceBinding) : RecyclerView.ViewHolder(binding.root)
@@ -150,6 +156,9 @@ class FindDatesFragment : Fragment(R.layout.fragment_find_dates) {
                     name.text = row.name
                     nakshatra.text = context.getString(R.string.home_nakshatra_names, row.nakshatraMalayalam, row.nakshatraEnglish)
                     count.text = context.resources.getQuantityString(R.plurals.find_result_count, row.count, row.count)
+                    addToCalendar.isVisible = row.count > 0
+                    addToCalendar.contentDescription = context.getString(R.string.action_add_to_google_calendar_for, row.name)
+                    addToCalendar.setOnClickListener { onAddToCalendar(row.personId) }
                 }
                 is ResultRowUi.Occurrence -> with((holder as OccurrenceHolder).binding) {
                     observanceDate.text = row.observanceDate ?: context.getString(R.string.find_no_observance_day)

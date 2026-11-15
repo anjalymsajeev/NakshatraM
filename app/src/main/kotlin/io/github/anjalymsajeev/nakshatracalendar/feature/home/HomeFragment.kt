@@ -25,6 +25,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val binding = FragmentHomeBinding.bind(view)
         binding.actionAddPerson.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeToPersonEdit(-1L)) }
         binding.actionViewCalendar.setOnClickListener { findNavController().navigate(R.id.calendarFragment) }
+        binding.actionSyncHistory.setOnClickListener { findNavController().navigate(R.id.action_global_sync_history) }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { render(binding, it) }

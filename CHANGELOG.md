@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Sprint 4: Google Calendar
+- **Google account** screen: connect with Google Identity Services (OAuth 2.0), with only the `calendar.events` and `calendar.calendarlist.readonly` scopes; choose the calendar; disconnect (revokes access). Tokens are never stored by the app.
+- **Event preview** (from Find dates → "Add to Google Calendar"): every date with a checkbox, Select all / Deselect all, and an "Already in Google Calendar" mark. **Create all** (automatic) or **Create selected** (manual), always after a confirmation dialog.
+- Events are **all-day** on the observance day, titled "Anvidh - Atham Nakshatra", with the brief's description (Malayalam date, month, Kollavarsham, star start and end, location, reminder), the member's colour and the chosen reminder.
+- **No duplicates**: deterministic Google event ids plus a unique local mapping. Re-syncing skips unchanged events and updates changed ones (name, colour, reminder); an event deleted in Google is restored.
+- Background sync with WorkManager: waits for a connection, retries offline, quota and server errors with exponential backoff, refreshes an expired token once, and asks to reconnect when access was revoked.
+- **Sync results** (live) and **Sync history** (Home and Settings): person, nakshatra, range, totals, successes, failures, last sync, status; Retry (with reconnect) and Remove events.
+- **Reminder** setting: none, 10 min, 30 min, 1 hour, 1 day (default) or custom (up to 4 weeks).
+- Room schema v3 (`nakshatra_occurrence`, `calendar_sync`, `calendar_event`, `reminder_configuration`) with a tested auto-migration.
+- Tests: 71 unit tests (event format and ids, REST client against MockWebServer, sync engine, preview ViewModel), plus emulator tests for the DAO, migration 2→3 and an end-to-end sync flow with a test-only fake Google module.
+
 ### Sprint 3: date range, Nakshatra results and calendars
 - **Find Nakshatra dates** (from the Family tab or a member's menu): choose members and a start and end date with the Material date picker (limited to the library's 1900–2100 range). Every occurrence is listed per member, recalculated automatically when the members or dates change: observance date, Malayalam date, month and Kollavarsham year, star start and end times in the member's time zone, and a "spans 2 days" badge. Ranges are validated (end after start, at most 5 years).
 - Occurrences come from the library's `nakshatraOccurrences`, which walks the real nakshatra spans; no 27-day cycle is assumed.

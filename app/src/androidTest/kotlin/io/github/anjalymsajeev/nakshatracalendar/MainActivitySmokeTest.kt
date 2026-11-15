@@ -7,12 +7,18 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /** Launches the real app (real DI, real library) and walks the bottom navigation. Runs on an emulator in CI. */
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class MainActivitySmokeTest {
+    @get:Rule val hilt = HiltAndroidRule(this)
+
     @Test
     fun launchesAndNavigatesBetweenTabs() {
         ActivityScenario.launch(MainActivity::class.java).use {

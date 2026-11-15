@@ -137,5 +137,43 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.NakshatraCalendar.Body"
             tools:text="Thiruvananthapuram" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_lg"
+            android:accessibilityHeading="true"
+            android:text="@string/settings_google_calendar"
+            android:textAppearance="@style/TextAppearance.NakshatraCalendar.Label" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/google_account"
+            style="@style/Widget.NakshatraCalendar.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:textAlignment="viewStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reminder"
+            style="@style/Widget.NakshatraCalendar.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder_all_day_note"
+            android:textAppearance="@style/TextAppearance.NakshatraCalendar.Label" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sync_history"
+            style="@style/Widget.NakshatraCalendar.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:text="@string/history_title"
+            android:textAlignment="viewStart" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

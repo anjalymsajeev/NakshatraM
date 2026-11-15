@@ -182,6 +182,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_view_calendar"
                 app:icon="@drawable/ic_calendar" />
+
+            <Button
+                android:id="@+id/action_sync_history"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/history_title" />
         </LinearLayout>
     </FrameLayout>
 </androidx.core.widget.NestedScrollView>

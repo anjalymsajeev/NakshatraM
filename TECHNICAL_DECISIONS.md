@@ -53,9 +53,19 @@ An occurrence is listed when its observance day (Settings convention) falls insi
 
 The library's `KollavarshamMonthView` is Jetpack Compose, which the app does not use yet (XML only). The app draws its own 7-column grid with the same data. Weeks start on Sunday, as in Kerala almanacs and the design.
 
-## TD-8: Google Calendar (planned for Sprint 4)
+## TD-8: Google Calendar integration
 
-- Google Identity Services `AuthorizationClient` with the scopes `calendar.events` and `calendar.calendarlist.readonly`.
-- The Calendar REST API over Retrofit/OkHttp.
-- Deterministic client-side event IDs plus a unique Room mapping, so that inserts are idempotent and duplicates impossible.
-- WorkManager for retries with backoff.
+- **Authorization:** Google Identity Services `AuthorizationClient` with `calendar.events` and `calendar.calendarlist.readonly` only. Google Play services keeps the grant; the app asks for a short-lived token when it needs one and never stores tokens. Consent is always shown in the foreground (before a sync starts, or from Retry); the background worker only uses a silent token and marks the run "Reconnect needed" otherwise. Disconnect calls Google's revoke endpoint.
+- **API:** Calendar API v3 over OkHttp and kotlinx.serialization, not the Google API client library: four calls, a smaller app, and easy MockWebServer tests.
+- **Idempotency:** each event's id is base32hex(SHA-1(person, nakshatra, date, calendar)). Inserting an existing id returns 409, which the client turns into an update, so duplicates are impossible even after a reinstall. Locally, `calendar_event` is unique per (occurrence, calendar).
+- **Updates:** a SHA-256 hash of everything sent is stored per event. A re-sync skips events whose hash is unchanged and updates the rest. An event the user deleted in Google is restored by the update (`status: confirmed`), but only when its content changed, so an unchanged re-sync costs no API calls.
+- **Retries:** WorkManager (network constraint, exponential backoff from 30 s, 5 attempts). Offline, 429, 403 rate/quota and 5xx are retried; other 4xx fail the event with its error kept for the history. A 401 drops the token and retries once with a fresh one.
+- **Data:** `nakshatra_occurrence` keeps a snapshot of each synced occurrence, so retries need no recalculation. Deleting a member clears the person link (`SET NULL`) instead of cascading, so their events can still be removed from Google later.
+
+## TD-15: All-day events and reminders
+
+Birth-star days are all-day events (D12). Google counts all-day reminders back from midnight at the start of the day, so "1 hour before" fires at 11 pm the evening before. Settings explains this next to the reminder choice. The default is 1 day before.
+
+## TD-16: UI tests replace Google with a test-only module
+
+Instrumented tests run in `HiltTestApplication` (custom `HiltTestRunner`). `FakeGoogleCalendarModule` (`@TestInstallIn`, androidTest only) replaces the OAuth client, the REST gateway and WorkManager with fakes that run the real sync engine, so the whole flow is tested on an emulator without a Google account. The real Google API is checked manually on a device.

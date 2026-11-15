@@ -28,6 +28,7 @@ A Malayalam Nakshatra Calendar: family members with birth nakshatras, every occu
 | D9 | No relation field or relation filter chips for now | 2026-11-15 |
 | D10 | Nakshatra results live on a "Find dates" screen (Family tab button and member menu), not in the Calendar tab | 2026-11-15 |
 | D11 | A date range may be at most 5 years, inside the library's supported dates (1900–2100) | 2026-11-15 |
+| D12 | Google Calendar events are all-day events on the observance day; star times go in the description | 2026-11-15 |
 
 ## Sprint plan
 
@@ -36,5 +37,5 @@ A Malayalam Nakshatra Calendar: family members with birth nakshatras, every occu
 | 1 | Foundation: Gradle, Hilt, Room, DataStore, theme, navigation, library integration, Home | Done |
 | 2 | Family members (CRUD, nakshatra picker, birth-star calculation, place search, colours, next Pirannal) | Done |
 | 3 | Date range, nakshatra results, Gregorian and Malayalam calendars | Done |
-| 4 | Google Calendar: OAuth, calendar picker, preview, auto and manual sync, history | Planned |
+| 4 | Google Calendar: OAuth, calendar picker, preview, auto and manual sync, history | Done |
 | 5 | Production readiness | Planned |
