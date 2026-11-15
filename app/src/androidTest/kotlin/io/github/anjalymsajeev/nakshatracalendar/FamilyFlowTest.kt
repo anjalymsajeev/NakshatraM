@@ -18,6 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Test
@@ -81,7 +82,10 @@ class FamilyFlowTest {
             onView(allOf(withId(R.id.more), withParent(hasDescendant(withText("${unique}x"))))).perform(click())
             onView(withText(R.string.action_delete)).inRoot(isPlatformPopup()).perform(click())
             onView(allOf(withText(R.string.action_delete), withId(android.R.id.button1))).perform(click())
-            eventually { onView(withText("${unique}x")).check(doesNotExist()) }
+            // The delete ran when its Snackbar appears; then the card must leave the list.
+            val deletedMessage = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.family_deleted, "${unique}x")
+            eventually { onView(withText(deletedMessage)).check(matches(isDisplayed())) }
+            eventually { onView(allOf(withId(R.id.name), withText("${unique}x"))).check(doesNotExist()) }
         }
     }
 
