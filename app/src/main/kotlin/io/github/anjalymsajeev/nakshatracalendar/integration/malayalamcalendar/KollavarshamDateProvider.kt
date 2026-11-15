@@ -9,6 +9,7 @@ import io.github.anjalymsajeev.kollavarsham.locale.format
 import io.github.anjalymsajeev.nakshatracalendar.core.common.AppError
 import io.github.anjalymsajeev.nakshatracalendar.core.common.AppResult
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.MalayalamDateInfo
+import io.github.anjalymsajeev.nakshatracalendar.domain.model.MalayalamMonthSpan
 import io.github.anjalymsajeev.nakshatracalendar.domain.repository.MalayalamDateProvider
 import java.time.LocalDate
 import javax.inject.Inject
@@ -18,6 +19,21 @@ import javax.inject.Inject
  * All conversion is done by the library; this class only maps types and errors.
  */
 class KollavarshamDateProvider @Inject constructor(private val calendar: KollavarshamCalendar) : MalayalamDateProvider {
+    override val supportedRange: ClosedRange<LocalDate> get() = calendar.supportedRange
+
+    override fun monthContaining(date: LocalDate): AppResult<MalayalamMonthSpan> = convert {
+        val ml = calendar.fromGregorian(date)
+        val boundary = calendar.monthBoundary(ml.year, ml.month)
+        MalayalamMonthSpan(
+            kollavarshamYear = ml.year,
+            monthNumber = ml.month.number,
+            nameMalayalam = ml.month.displayName(CalendarLocale.MALAYALAM),
+            nameEnglish = ml.month.displayName(CalendarLocale.ENGLISH),
+            firstDay = boundary.firstDay,
+            lastDay = boundary.lastDay
+        )
+    }
+
     override fun malayalamDate(date: LocalDate): AppResult<MalayalamDateInfo> = try {
         val ml = calendar.fromGregorian(date)
         AppResult.Success(
@@ -32,6 +48,14 @@ class KollavarshamDateProvider @Inject constructor(private val calendar: Kollava
                 formattedEnglish = ml.format(CalendarLocale.ENGLISH, DateStyle.LONG)
             )
         )
+    } catch (e: DateOutOfSupportedRangeException) {
+        AppResult.Failure(AppError.UnsupportedDate(e.message.orEmpty()))
+    } catch (e: IllegalArgumentException) {
+        AppResult.Failure(AppError.CalculationFailed(e))
+    }
+
+    private inline fun <T> convert(block: () -> T): AppResult<T> = try {
+        AppResult.Success(block())
     } catch (e: DateOutOfSupportedRangeException) {
         AppResult.Failure(AppError.UnsupportedDate(e.message.orEmpty()))
     } catch (e: IllegalArgumentException) {

@@ -3,6 +3,7 @@ package io.github.anjalymsajeev.nakshatracalendar.domain.repository
 import io.github.anjalymsajeev.nakshatracalendar.core.common.AppResult
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.CalculationLocation
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.MalayalamDateInfo
+import io.github.anjalymsajeev.nakshatracalendar.domain.model.MalayalamMonthSpan
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.NakshatraInfo
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.NakshatraName
 import io.github.anjalymsajeev.nakshatracalendar.domain.model.Person
@@ -16,7 +17,13 @@ import kotlinx.coroutines.flow.Flow
 
 /** Malayalam date conversion. Implemented by the Kollavarsham library adapter; no calendar logic in the app. */
 interface MalayalamDateProvider {
+    /** Dates the library can convert (1900-01-01 to 2100-12-31 at the time of writing). */
+    val supportedRange: ClosedRange<LocalDate>
+
     fun malayalamDate(date: LocalDate): AppResult<MalayalamDateInfo>
+
+    /** The Malayalam month containing [date], with its first and last Gregorian days. */
+    fun monthContaining(date: LocalDate): AppResult<MalayalamMonthSpan>
 }
 
 /** A nakshatra occurrence and the civil day that belongs to it under a star-day convention. */
@@ -37,6 +44,18 @@ interface NakshatraEngine {
 
     /** Every nakshatra period overlapping [start, end), in order. */
     fun nakshatrasBetween(start: Instant, end: Instant): AppResult<List<NakshatraInfo>>
+
+    /**
+     * Every occurrence of nakshatra [number] overlapping [from]..[to] (days in [location]'s zone), found by walking
+     * the real nakshatra spans (never a fixed 27-day cycle), each with its observance day under [convention].
+     */
+    fun occurrences(
+        number: Int,
+        from: LocalDate,
+        to: LocalDate,
+        location: CalculationLocation,
+        convention: StarDayConvention
+    ): AppResult<List<StarOccurrence>>
 
     /** The first occurrence of nakshatra [number] whose observance day is on or after [from]. */
     fun nextObservance(

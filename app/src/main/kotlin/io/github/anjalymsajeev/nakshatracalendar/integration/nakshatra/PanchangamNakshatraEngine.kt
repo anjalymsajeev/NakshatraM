@@ -55,21 +55,34 @@ class PanchangamNakshatraEngine @Inject constructor() : NakshatraEngine {
         }
     }
 
+    override fun occurrences(
+        number: Int,
+        from: LocalDate,
+        to: LocalDate,
+        location: CalculationLocation,
+        convention: StarDayConvention
+    ): AppResult<List<StarOccurrence>> = calculate {
+        panchangamFor(location)
+            .nakshatraOccurrences(Nakshatra.of(number), from, to, convention.toLibrary())
+            .map { StarOccurrence(it.span.toInfo(), it.observanceDate) }
+    }
+
     override fun nextObservance(
         number: Int,
         from: LocalDate,
         location: CalculationLocation,
         convention: StarDayConvention
     ): AppResult<StarOccurrence?> = calculate {
-        val libraryConvention = when (convention) {
-            StarDayConvention.SUNRISE -> LibraryConvention.SUNRISE
-            StarDayConvention.SIX_NAZHIKA -> LibraryConvention.SIX_NAZHIKA
-        }
         // A nakshatra recurs about every 27.3 days, so a 60-day window always holds the next one.
         panchangamFor(location)
-            .nakshatraOccurrences(Nakshatra.of(number), from.minusDays(1), from.plusDays(WINDOW_DAYS), libraryConvention)
+            .nakshatraOccurrences(Nakshatra.of(number), from.minusDays(1), from.plusDays(WINDOW_DAYS), convention.toLibrary())
             .firstOrNull { occurrence -> occurrence.observanceDate?.let { !it.isBefore(from) } == true }
             ?.let { StarOccurrence(it.span.toInfo(), it.observanceDate) }
+    }
+
+    private fun StarDayConvention.toLibrary() = when (this) {
+        StarDayConvention.SUNRISE -> LibraryConvention.SUNRISE
+        StarDayConvention.SIX_NAZHIKA -> LibraryConvention.SIX_NAZHIKA
     }
 
     private fun panchangamFor(location: CalculationLocation): Panchangam = panchangams.getOrPut(location) {
