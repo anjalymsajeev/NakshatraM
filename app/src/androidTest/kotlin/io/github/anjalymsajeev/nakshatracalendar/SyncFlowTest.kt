@@ -50,10 +50,21 @@ class SyncFlowTest {
             onView(withText(R.string.preview_confirm_action)).perform(click())
 
             eventually { onView(withId(R.id.status)).check(matches(withText(R.string.sync_status_succeeded))) }
-            val mine = TestGoogleCalendar.upserts.filter { it.title.startsWith(unique) }
-            assertEquals(2, mine.size)
-            assertTrue(mine.all { it.calendarId == TestGoogleCalendar.calendar.id && it.title == "$unique - Revathi Nakshatra" })
+            eventually { onView(withId(R.id.counts)).check(matches(withText(org.hamcrest.Matchers.startsWith("2 ")))) }
+            val mine =
+                eventuallyValue { TestGoogleCalendar.upserts.toList().filter { it.title.startsWith(unique) }.takeIf { it.size == 2 } }
+            assertEquals("events sent: ${TestGoogleCalendar.upserts.map { it.title + " @" + it.date }}", 2, mine?.size)
+            assertTrue(mine!!.all { it.calendarId == TestGoogleCalendar.calendar.id && it.title == "$unique - Revathi Nakshatra" })
         }
+    }
+
+    private fun <T> eventuallyValue(timeoutMs: Long = 10_000, read: () -> T?): T? {
+        val end = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < end) {
+            read()?.let { return it }
+            Thread.sleep(200)
+        }
+        return read()
     }
 
     private fun containsCount(count: Int) = org.hamcrest.Matchers.containsString("($count)")
