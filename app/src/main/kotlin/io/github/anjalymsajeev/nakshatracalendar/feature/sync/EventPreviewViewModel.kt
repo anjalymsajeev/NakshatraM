@@ -118,6 +118,9 @@ class EventPreviewViewModel @Inject constructor(
     private val busy = MutableStateFlow(false)
     private var pendingMode: SyncMode? = null
 
+    /** Dates already in the selected calendar, as last seen; they are left out of the default selection. */
+    @Volatile private var alreadySynced: Set<LocalDate> = emptySet()
+
     private val synced: Flow<Set<LocalDate>> = calendars.selectedCalendar.flatMapLatest { calendar ->
         if (calendar == null) flowOf(emptySet()) else sync.observeSyncedDates(personId, calendar.id)
     }
@@ -216,8 +219,11 @@ class EventPreviewViewModel @Inject constructor(
     private fun eligibleDates(): List<LocalDate> =
         (occurrences.value as? AppResult.Success)?.value.orEmpty().mapNotNull { it.observanceDate }
 
-    private fun currentSelection(): Set<LocalDate> =
-        (uiState.value as? PreviewUiState.Content)?.rows?.filter { it.selected }?.mapNotNull { it.date }?.toSet().orEmpty()
+    /**
+     * The selection itself, not the last rendered state: quick successive taps must each build on the previous
+     * change, even before the UI has re-rendered.
+     */
+    private fun currentSelection(): Set<LocalDate> = selection.value ?: eligibleDates().filter { it !in alreadySynced }.toSet()
 
     private fun updateSelection(change: (Set<LocalDate>) -> Set<LocalDate>) {
         val next = change(currentSelection())
@@ -233,6 +239,7 @@ class EventPreviewViewModel @Inject constructor(
         working: Boolean
     ): PreviewUiState.Content {
         val member = person
+        alreadySynced = inCalendar
         val selected = chosen ?: found.mapNotNull { it.observanceDate }.filter { it !in inCalendar }.toSet()
         val rows = found.map { occurrence ->
             val date = occurrence.observanceDate

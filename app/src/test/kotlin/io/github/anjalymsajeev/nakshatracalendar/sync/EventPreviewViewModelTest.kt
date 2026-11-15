@@ -99,6 +99,24 @@ class EventPreviewViewModelTest {
     }
 
     @Test
+    fun quickSuccessiveTapsBuildOnEachOtherBeforeTheScreenReRenders() = runTest(dispatcher) {
+        calendar.value = GoogleCalendarInfo("primary", "Me")
+        synced.value = emptySet()
+        val reference = viewModel()
+        backgroundScope.launch { reference.uiState.collect {} }
+        val (first, second) = (reference.uiState.value as PreviewUiState.Content).rows.mapNotNull { it.date }
+
+        val vm = viewModel()
+        // No collector yet, so uiState has not re-rendered between the calls (like taps in one frame).
+        vm.deselectAll()
+        vm.toggle(first)
+        vm.toggle(second)
+        backgroundScope.launch { vm.uiState.collect {} }
+        val state = vm.uiState.value as PreviewUiState.Content
+        assertEquals(setOf(first, second), state.rows.filter { it.selected }.mapNotNull { it.date }.toSet())
+    }
+
+    @Test
     fun withoutACalendarTheUserIsSentToChooseOne() = runTest(dispatcher) {
         val vm = viewModel()
         backgroundScope.launch { vm.uiState.collect {} }
