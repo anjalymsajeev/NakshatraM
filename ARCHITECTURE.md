@@ -15,7 +15,7 @@ io.github.anjalymsajeev.nakshatracalendar
 ├── domain/        model, repository (interfaces), usecase
 ├── data/          local (Room entities, DAOs), repository (implementations, DataStore)
 ├── integration/   malayalamcalendar, nakshatra (library adapters), googlecalendar (Sprint 4)
-└── feature/       home, person, calendar, settings  (+ nakshatra, eventpreview, sync later)
+└── feature/       home, person, nakshatra, finddates, calendar, settings  (+ eventpreview, sync later)
 ```
 
 Dependencies point inward: `feature → domain ← data / integration`. Hilt modules bind the implementations.
@@ -33,13 +33,14 @@ graph LR
 
 | Domain interface | Implementation | Library API used |
 |---|---|---|
-| `MalayalamDateProvider` | `KollavarshamDateProvider` | `KollavarshamCalendar.fromGregorian`, `MalayalamMonth.displayName`, `MalayalamDate.format` |
+| `MalayalamDateProvider` | `KollavarshamDateProvider` | `KollavarshamCalendar.fromGregorian`, `monthBoundary`, `supportedRange`, `MalayalamMonth.displayName`, `MalayalamDate.format` |
 | `NakshatraEngine` | `PanchangamNakshatraEngine` | `Panchangam.create(PanchangamLocation)`, `sunrise`, `nakshatraSpan`, `nakshatraOccurrences` (0.2.0), `Nakshatra.displayName` |
 | `PlaceSearchRepository` | `GeocoderPlaceSearchRepository` | Android `Geocoder` (via `GeocoderClient`), `android.icu.util.TimeZone` (via `TimeZoneResolver`) |
 
 - Library exceptions are mapped to `AppError` at the adapter: `DateOutOfSupportedRangeException` becomes `UnsupportedDate`, and failed calculations become `CalculationFailed`.
 - Nakshatra (astronomy) and Malayalam date conversion are separate interfaces backed by separate library modules.
-- Sprint 3 uses the library's `Panchangam.nakshatraOccurrences` (0.2.0) for the date-range results.
+- Date-range results (`FindNakshatraDatesUseCase`) and calendar family markers (`ObserveCalendarDaysUseCase`) both use `NakshatraEngine.occurrences`, backed by the library's `Panchangam.nakshatraOccurrences` (0.2.0).
+- Malayalam month views take their first and last days from the library's month boundaries (`MalayalamDateProvider.monthContaining`); the app never computes month starts.
 
 ## State and data flow
 

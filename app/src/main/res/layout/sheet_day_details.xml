@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin">
+
+    <TextView
+        android:id="@+id/gregorian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:accessibilityHeading="true"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.Headline"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/malayalam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.MalayalamDisplay"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:text="@string/calendar_nakshatra_at_sunrise"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.Label" />
+
+    <TextView
+        android:id="@+id/nakshatra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.Body" />
+
+    <TextView
+        android:id="@+id/family_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:text="@string/calendar_family_title"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.Label" />
+
+    <TextView
+        android:id="@+id/family"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="4dp"
+        android:textAppearance="@style/TextAppearance.NakshatraCalendar.Body" />
+</LinearLayout>

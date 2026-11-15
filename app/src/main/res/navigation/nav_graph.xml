@@ -10,6 +10,7 @@
 
     <fragment android:id="@+id/familyFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.person.FamilyFragment" android:label="@string/nav_family">
         <action android:id="@+id/action_family_to_person_edit" app:destination="@id/personEditFragment" />
+        <action android:id="@+id/action_family_to_find_dates" app:destination="@id/findDatesFragment" />
     </fragment>
 
     <fragment android:id="@+id/calendarFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.calendar.CalendarFragment" android:label="@string/nav_calendar" />
@@ -18,6 +19,11 @@
 
     <!-- Add (personId = -1) or edit a family member. -->
     <fragment android:id="@+id/personEditFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.person.PersonEditFragment" android:label="@string/person_add_title">
+        <argument android:name="personId" app:argType="long" android:defaultValue="-1L" />
+    </fragment>
+
+    <!-- Find Nakshatra dates in a range; personId preselects one member (-1 = everyone). -->
+    <fragment android:id="@+id/findDatesFragment" android:name="io.github.anjalymsajeev.nakshatracalendar.feature.finddates.FindDatesFragment" android:label="@string/find_title">
         <argument android:name="personId" app:argType="long" android:defaultValue="-1L" />
     </fragment>
 </navigation>

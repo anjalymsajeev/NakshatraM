@@ -20,9 +20,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_md"
             android:text="@string/family_subtitle"
             android:textAppearance="@style/TextAppearance.NakshatraCalendar.Body" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/find_dates"
+            style="@style/Widget.NakshatraCalendar.Button.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_sm"
+            android:text="@string/action_find_dates"
+            android:visibility="gone"
+            app:icon="@drawable/ic_find_dates" />
 
         <FrameLayout
             android:layout_width="match_parent"

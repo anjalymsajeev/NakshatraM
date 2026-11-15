@@ -26,6 +26,8 @@ A Malayalam Nakshatra Calendar: family members with birth nakshatras, every occu
 | D7 | Locations use online place search (platform Geocoder) with a manual fallback | 2026-11-15 |
 | D8 | Family cards show the next Pirannal; this needs library 0.2.0-alpha01 | 2026-11-15 |
 | D9 | No relation field or relation filter chips for now | 2026-11-15 |
+| D10 | Nakshatra results live on a "Find dates" screen (Family tab button and member menu), not in the Calendar tab | 2026-11-15 |
+| D11 | A date range may be at most 5 years, inside the library's supported dates (1900–2100) | 2026-11-15 |
 
 ## Sprint plan
 
@@ -33,6 +35,6 @@ A Malayalam Nakshatra Calendar: family members with birth nakshatras, every occu
 |---|---|---|
 | 1 | Foundation: Gradle, Hilt, Room, DataStore, theme, navigation, library integration, Home | Done |
 | 2 | Family members (CRUD, nakshatra picker, birth-star calculation, place search, colours, next Pirannal) | Done |
-| 3 | Date range, nakshatra results, Gregorian and Malayalam calendars | Planned |
+| 3 | Date range, nakshatra results, Gregorian and Malayalam calendars | Done |
 | 4 | Google Calendar: OAuth, calendar picker, preview, auto and manual sync, history | Planned |
 | 5 | Production readiness | Planned |

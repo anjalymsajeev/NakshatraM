@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Sprint 3: date range, Nakshatra results and calendars
+- **Find Nakshatra dates** (from the Family tab or a member's menu): choose members and a start and end date with the Material date picker (limited to the library's 1900–2100 range). Every occurrence is listed per member, recalculated automatically when the members or dates change: observance date, Malayalam date, month and Kollavarsham year, star start and end times in the member's time zone, and a "spans 2 days" badge. Ranges are validated (end after start, at most 5 years).
+- Occurrences come from the library's `nakshatraOccurrences`, which walks the real nakshatra spans; no 27-day cycle is assumed.
+- **Calendar tab**: Gregorian and Malayalam month views with a toggle, previous/next and Today. Each day shows the other calendar's date, the nakshatra at sunrise, and coloured dots for family birth-star days. Tapping a day opens its details. A sync indicator is ready for Sprint 4.
+- Fix: deleting the last family member no longer leaves a stale card in the hidden list.
+- Tests: 52 unit tests (range validation, results and calendar days against the real library, both ViewModels), Espresso tests for Find dates and the calendar.
+
 ### Sprint 2: family members
 - Family list (design "Pirannal Scheduler"): gold-trimmed cards with colour, name, star in Malayalam and English, and next Pirannal (Gregorian and Malayalam date); empty, loading and error states; delete with confirmation and undo.
 - Add and edit screen: name, birth nakshatra (searchable picker with all 27 stars), optional birth date, time and place, calculation location, and an event colour matching Google Calendar's 11 colours.

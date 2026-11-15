@@ -25,8 +25,6 @@
 
     <string name="family_empty_title">കുടുംബാംഗങ്ങൾ ഇല്ല</string>
     <string name="family_empty_body">പിറന്നാൾ ദിവസങ്ങൾ അറിയാൻ ഒരാളെയും അവരുടെ ജന്മനക്ഷത്രത്തെയും ചേർക്കുക.</string>
-    <string name="calendar_placeholder_title">കലണ്ടർ</string>
-    <string name="calendar_placeholder_body">ഇംഗ്ലീഷ്, മലയാളം കലണ്ടർ കാഴ്ചകൾ അടുത്ത പതിപ്പിൽ വരും.</string>
 
     <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
     <string name="settings_language">ഭാഷ</string>
@@ -127,4 +125,38 @@
     <string name="color_blueberry">ബ്ലൂബെറി</string>
     <string name="color_basil">ബേസിൽ</string>
     <string name="color_tomato">ടൊമാറ്റോ</string>
+
+    <!-- Sprint 3: find dates and calendar -->
+    <string name="action_find_dates">നക്ഷത്ര തീയതികൾ കണ്ടെത്തുക</string>
+    <string name="find_title">നക്ഷത്ര തീയതികൾ കണ്ടെത്തുക</string>
+    <string name="find_members">കുടുംബാംഗങ്ങൾ</string>
+    <string name="find_start_date">ആരംഭ തീയതി</string>
+    <string name="find_end_date">അവസാന തീയതി</string>
+    <string name="find_error_end_before_start">അവസാന തീയതി ആരംഭ തീയതിയോ അതിനു ശേഷമോ ആയിരിക്കണം.</string>
+    <string name="find_error_too_long">പരമാവധി %1$d വർഷത്തെ കാലയളവ് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="find_no_members">നക്ഷത്ര തീയതികൾ കണ്ടെത്താൻ ആദ്യം ഒരു കുടുംബാംഗത്തെ ചേർക്കുക.</string>
+    <string name="find_no_selection">കുറഞ്ഞത് ഒരു കുടുംബാംഗത്തെയെങ്കിലും തിരഞ്ഞെടുക്കുക.</string>
+    <string name="find_empty">ഈ കാലയളവിൽ നക്ഷത്ര തീയതികളില്ല.</string>
+    <string name="find_no_observance_day">ആചരണ ദിവസമില്ല (വളരെ ചെറിയ നക്ഷത്രം)</string>
+    <string name="find_star_times">നക്ഷത്രം: %1$s – %2$s</string>
+    <string name="find_times_in_zone">സമയം: %1$s</string>
+    <string name="find_spans_two_days">2 ദിവസങ്ങളിൽ</string>
+    <string name="calendar_malayalam_title">%1$s %2$d</string>
+    <string name="calendar_gregorian_subtitle">%1$s · കൊല്ലവർഷം %2$s</string>
+    <string name="calendar_malayalam_subtitle">%1$s – %2$s</string>
+    <string name="calendar_previous">മുൻ മാസം</string>
+    <string name="calendar_next">അടുത്ത മാസം</string>
+    <string name="calendar_today">ഇന്ന്</string>
+    <string name="calendar_mode_gregorian">ഇംഗ്ലീഷ്</string>
+    <string name="calendar_mode_malayalam">മലയാളം</string>
+    <string name="calendar_legend_family">കുടുംബാംഗത്തിന്റെ ജന്മനക്ഷത്ര ദിവസം</string>
+    <string name="calendar_legend_nakshatra">ഓരോ ദിവസവും കാണിക്കുന്നത് സൂര്യോദയത്തിലെ നക്ഷത്രമാണ്.</string>
+    <string name="calendar_family_days">%1$s എന്നിവരുടെ ജന്മനക്ഷത്രം</string>
+    <string name="calendar_nakshatra_until">%1$s, %2$s വരെ</string>
+    <string name="calendar_nakshatra_at_sunrise">സൂര്യോദയത്തിലെ നക്ഷത്രം</string>
+    <string name="calendar_family_title">കുടുംബാംഗങ്ങളുടെ ജന്മനക്ഷത്ര ദിവസം</string>
+    <plurals name="find_result_count">
+        <item quantity="one">%d തീയതി</item>
+        <item quantity="other">%d തീയതികൾ</item>
+    </plurals>
 </resources>

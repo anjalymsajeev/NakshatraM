@@ -4,7 +4,7 @@ An Android app for Malayalam families: keep each person's birth nakshatra, see t
 
 Built with Kotlin, XML layouts and MVVM + Clean Architecture. All Malayalam calendar and nakshatra calculations come from the separate [Malayalam Calendar Kotlin library](https://github.com/anjalymsajeev/malayalam-calendar-kotlin) (`io.github.anjalymsajeev:kollavarsham-*` on Maven Central). This app contains no calendar engine of its own.
 
-> **Status: Sprint 2 (family members).** Home dashboard, settings, family members (add, edit and delete, birth-star calculation, place search) and next Pirannal dates are done. Nakshatra results, calendars and Google Calendar sync follow in Sprints 3–5. See [CHANGELOG.md](CHANGELOG.md).
+> **Status: Sprint 3 (results and calendars).** Home dashboard, settings, family members, Nakshatra dates in a chosen range, and Gregorian and Malayalam month calendars are done. Google Calendar sync and production hardening follow in Sprints 4–5. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Features (planned for 1.0)
 

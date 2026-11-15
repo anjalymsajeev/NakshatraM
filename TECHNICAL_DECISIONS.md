@@ -41,6 +41,18 @@ Within 60 minutes of a nakshatra change (birth times are often approximate), or 
 
 The user picks one of Google Calendar's 11 event colours, stored as its `colorId` (1–11), so that synced events (Sprint 4) keep that colour.
 
+## TD-12: Results recalculate automatically
+
+The Find dates screen recalculates whenever the selected members or dates change, cancelling any calculation in progress (`collectLatest`), instead of needing a Calculate button. A 5-year search for one member takes well under a second.
+
+## TD-13: Which occurrences belong to a range
+
+An occurrence is listed when its observance day (Settings convention) falls inside the range. Its start and end times are shown in the member's calculation zone, and it is marked "spans 2 days" when it crosses local midnight. An occurrence without an observance day (a star too short to cover the checkpoint) is listed when it overlaps the range.
+
+## TD-14: The calendar grid is a RecyclerView, not the library's Compose view
+
+The library's `KollavarshamMonthView` is Jetpack Compose, which the app does not use yet (XML only). The app draws its own 7-column grid with the same data. Weeks start on Sunday, as in Kerala almanacs and the design.
+
 ## TD-8: Google Calendar (planned for Sprint 4)
 
 - Google Identity Services `AuthorizationClient` with the scopes `calendar.events` and `calendar.calendarlist.readonly`.

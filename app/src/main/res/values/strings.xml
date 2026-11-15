@@ -25,8 +25,6 @@
 
     <string name="family_empty_title">No family members yet</string>
     <string name="family_empty_body">Add a person and their birth nakshatra to track their Pirannal days.</string>
-    <string name="calendar_placeholder_title">Calendar</string>
-    <string name="calendar_placeholder_body">Gregorian and Malayalam calendar views are coming in the next release.</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_language">Language</string>
@@ -127,4 +125,38 @@
     <string name="color_blueberry">Blueberry</string>
     <string name="color_basil">Basil</string>
     <string name="color_tomato">Tomato</string>
+
+    <!-- Sprint 3: find dates and calendar -->
+    <string name="action_find_dates">Find Nakshatra dates</string>
+    <string name="find_title">Find Nakshatra dates</string>
+    <string name="find_members">Family members</string>
+    <string name="find_start_date">Start date</string>
+    <string name="find_end_date">End date</string>
+    <string name="find_error_end_before_start">The end date must be on or after the start date.</string>
+    <string name="find_error_too_long">Choose a period of at most %1$d years.</string>
+    <string name="find_no_members">Add a family member first to find their Nakshatra dates.</string>
+    <string name="find_no_selection">Select at least one family member.</string>
+    <string name="find_empty">No Nakshatra dates in this period.</string>
+    <string name="find_no_observance_day">No observance day (very short star)</string>
+    <string name="find_star_times">Star: %1$s – %2$s</string>
+    <string name="find_times_in_zone">Times in %1$s</string>
+    <string name="find_spans_two_days">Spans 2 days</string>
+    <string name="calendar_malayalam_title">%1$s %2$d</string>
+    <string name="calendar_gregorian_subtitle">%1$s · ME %2$s</string>
+    <string name="calendar_malayalam_subtitle">%1$s – %2$s</string>
+    <string name="calendar_previous">Previous month</string>
+    <string name="calendar_next">Next month</string>
+    <string name="calendar_today">Today</string>
+    <string name="calendar_mode_gregorian">Gregorian</string>
+    <string name="calendar_mode_malayalam">Malayalam</string>
+    <string name="calendar_legend_family">Family birth-star day</string>
+    <string name="calendar_legend_nakshatra">The star in each day is the nakshatra at sunrise.</string>
+    <string name="calendar_family_days">birth star of %1$s</string>
+    <string name="calendar_nakshatra_until">%1$s, until %2$s</string>
+    <string name="calendar_nakshatra_at_sunrise">Nakshatra at sunrise</string>
+    <string name="calendar_family_title">Family birth-star days</string>
+    <plurals name="find_result_count">
+        <item quantity="one">%d date</item>
+        <item quantity="other">%d dates</item>
+    </plurals>
 </resources>

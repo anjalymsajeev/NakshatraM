@@ -40,6 +40,7 @@ class FamilyFragment : Fragment(R.layout.fragment_family) {
         binding.list.adapter = adapter
         binding.addPerson.setOnClickListener { openEditor(NEW_PERSON) }
         binding.emptyAddPerson.setOnClickListener { openEditor(NEW_PERSON) }
+        binding.findDates.setOnClickListener { openFindDates(NEW_PERSON) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -50,6 +51,7 @@ class FamilyFragment : Fragment(R.layout.fragment_family) {
                         binding.list.isVisible = state is FamilyUiState.Content
                         binding.errorMessage.isVisible = state is FamilyUiState.Error
                         binding.addPerson.isVisible = state is FamilyUiState.Content
+                        binding.findDates.isVisible = state is FamilyUiState.Content
                         // Clear the list when it is hidden, so deleted cards do not linger (and flash back on undo).
                         adapter.submitList((state as? FamilyUiState.Content)?.items.orEmpty())
                         if (state is FamilyUiState.Error) binding.errorMessage.setText(state.message)
@@ -74,11 +76,17 @@ class FamilyFragment : Fragment(R.layout.fragment_family) {
         findNavController().navigate(FamilyFragmentDirections.actionFamilyToPersonEdit(id))
     }
 
+    /** [personId] preselects one member; [NEW_PERSON] (-1) selects everyone. */
+    private fun openFindDates(personId: Long) {
+        findNavController().navigate(FamilyFragmentDirections.actionFamilyToFindDates(personId))
+    }
+
     private fun showMenu(anchor: View, item: FamilyItemUi) {
         PopupMenu(requireContext(), anchor).apply {
             menuInflater.inflate(R.menu.family_member_actions, menu)
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
+                    R.id.action_find_dates -> openFindDates(item.id)
                     R.id.action_edit -> openEditor(item.id)
                     R.id.action_delete -> confirmDelete(item)
                 }
